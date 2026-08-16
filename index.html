@@ -45,6 +45,32 @@
     * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   }
 
+  /* ---------- ANIMATION: reveal-on-scroll ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-anim {
+    opacity: 0;
+    animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .hero-anim:nth-child(1) { animation-delay: 0.05s; }
+  .hero-anim:nth-child(2) { animation-delay: 0.15s; }
+  .hero-anim:nth-child(3) { animation-delay: 0.25s; }
+  .hero-anim:nth-child(4) { animation-delay: 0.35s; }
+  .hero-anim:nth-child(5) { animation-delay: 0.45s; }
+  .portrait.hero-anim { animation-delay: 0.2s; }
+
   .wrap {
     max-width: 1240px;
     margin: 0 auto;
@@ -88,12 +114,29 @@
     list-style: none;
   }
   .nav-links a {
+    position: relative;
     text-decoration: none;
     font-size: 0.88rem;
     color: var(--ink);
     opacity: 0.75;
     transition: opacity 0.2s ease, color 0.2s ease;
     letter-spacing: 0.01em;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: var(--rust);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+  .nav-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
   .nav-links a:hover { opacity: 1; color: var(--rust); }
 
@@ -225,6 +268,13 @@
     max-width: 46ch;
   }
 
+  @media (max-width: 480px) {
+    .nav-name { font-size: 1.1rem; }
+    h1.display { font-size: clamp(2.2rem, 9vw, 3rem); }
+    .hero-tagline { font-size: 1.1rem; }
+    .btn { padding: 11px 18px; font-size: 0.85rem; }
+  }
+
   .portrait {
     width: 100%;
     max-width: 460px;
@@ -337,10 +387,23 @@
     width: 1px;
     background: linear-gradient(var(--gold-light), transparent 96%);
     opacity: 0.5;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .thread.is-drawn::before {
+    transform: scaleY(1);
   }
   .thread-node {
     position: relative;
     padding-bottom: 40px;
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .thread-node.is-visible {
+    opacity: 1;
+    transform: translateX(0);
   }
   .thread-node:last-child { padding-bottom: 0; }
   .thread-node::before {
@@ -353,6 +416,11 @@
     background: var(--gold);
     border: 2px solid var(--forest);
     box-shadow: 0 0 0 1px var(--gold-light);
+    transform: scale(0);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s;
+  }
+  .thread-node.is-visible::before {
+    transform: scale(1);
   }
   .thread-node .t-field {
     font-family: var(--serif);
@@ -368,8 +436,15 @@
     display: grid;
     grid-template-columns: 200px 1fr;
     gap: 28px;
-    padding: 30px 0;
+    padding: 30px 0 30px 16px;
+    margin-left: -16px;
     border-bottom: 1px solid var(--line);
+    border-left: 2px solid transparent;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .project:hover {
+    border-left-color: var(--gold);
+    background: rgba(200, 155, 60, 0.04);
   }
   .project:first-child { padding-top: 0; }
   .project-meta { font-size: 0.8rem; color: var(--rust); font-weight: 500; letter-spacing: 0.02em; }
@@ -531,6 +606,11 @@
     overflow: hidden;
     box-shadow: 0 14px 30px -16px rgba(31, 58, 46, 0.4);
     position: relative;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  }
+  .book-cover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 36px -16px rgba(31, 58, 46, 0.5);
   }
   .book-cover img {
     width: 100%;
@@ -625,16 +705,16 @@
 <header class="hero" id="top">
   <div class="wrap">
     <div>
-      <h1 class="display">Hi, I'm Basbo.</h1>
-      <p class="hero-tagline">I'm passionate about building the connective tissue between biology, computing, and the people they serve.</p>
-      <p class="hero-sub">Currently a senior at Dakota State University. Right now I'm doing research at Yale School of Medicine, Madison Cyber Labs, and Corteva Agriscience. My free time (when I get some) goes to binge-watching The Big Bang Theory, learning how to swim, and playing tennis &mdash; enthusiastically, if not always well.</p>
-      <div class="hero-actions">
+      <h1 class="display hero-anim">Hi, I'm Basbo.</h1>
+      <p class="hero-tagline hero-anim">I'm passionate about building <em>connective tissue</em> between biology, computing, and the people they serve.</p>
+      <p class="hero-sub hero-anim">Currently a senior at Dakota State University. Right now I'm doing research at Yale School of Medicine, Madison Cyber Labs, and Corteva Agriscience. My free time (when I get some) goes to binge-watching The Big Bang Theory, learning how to swim, and playing tennis &mdash; enthusiastically, if not always well.</p>
+      <div class="hero-actions hero-anim">
         <a class="btn btn-primary" href="Basbo_Ayelazono_CV%20(1).pdf" target="_blank" rel="noopener">View CV</a>
         <a class="btn btn-secondary" href="Basbo_Ayelazono_CV%20(1).pdf" download>Download CV</a>
       </div>
-      <p class="hero-signature">I'm currently seeking PhD positions in computational design, accessibility, and computational biology.</p>
+      <p class="hero-signature hero-anim">I'm currently seeking PhD positions in computational design, accessibility, and computational biology.</p>
     </div>
-    <div class="portrait">
+    <div class="portrait hero-anim">
       <img src="basbo-photo.jpeg" alt="Portrait of Basbo Ayelazono" id="portraitImg">
     </div>
   </div>
@@ -642,7 +722,7 @@
 
 <section id="about">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div>
         <div class="section-kicker">About</div>
         <h2 class="section-title">A bit about my work</h2>
@@ -695,7 +775,7 @@
 
 <section id="projects">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div>
         <div class="section-kicker">Selected Work</div>
         <h2 class="section-title">Projects</h2>
@@ -703,7 +783,7 @@
     </div>
     <div class="project-list">
 
-      <div class="project">
+      <div class="project reveal">
         <div class="project-meta">2026<span class="p-org">Corteva Agriscience</span></div>
         <div>
           <h3 class="project-title">OMNI Probe Panel Management App</h3>
@@ -712,7 +792,7 @@
         </div>
       </div>
 
-      <div class="project">
+      <div class="project reveal">
         <div class="project-meta">2026<span class="p-org">Corteva Agriscience</span></div>
         <div>
           <h3 class="project-title">Shipping &amp; Logistics Automation</h3>
@@ -721,7 +801,7 @@
         </div>
       </div>
 
-      <div class="project">
+      <div class="project reveal">
         <div class="project-meta">2025 &ndash; Present<span class="p-org">Yale School of Medicine</span></div>
         <div>
           <h3 class="project-title">scRNA-seq Analysis Pipeline</h3>
@@ -730,7 +810,7 @@
         </div>
       </div>
 
-      <div class="project">
+      <div class="project reveal">
         <div class="project-meta">2025<span class="p-org">Madison Cyber Labs</span></div>
         <div>
           <h3 class="project-title">CareLog &mdash; NFC Visitor &amp; Activity Logging</h3>
@@ -739,7 +819,7 @@
         </div>
       </div>
 
-      <div class="project">
+      <div class="project reveal">
         <div class="project-meta">2025<span class="p-org">Madison Cyber Labs</span></div>
         <div>
           <h3 class="project-title">Snoezelen Multisensory Environment</h3>
@@ -748,7 +828,7 @@
         </div>
       </div>
 
-      <div class="project">
+      <div class="project reveal">
         <div class="project-meta">2025<span class="p-org">Madison Cyber Labs</span></div>
         <div>
           <h3 class="project-title">Assistive Hearing &amp; Audio Signal Processing</h3>
@@ -757,7 +837,7 @@
         </div>
       </div>
 
-      <div class="project">
+      <div class="project reveal">
         <div class="project-meta">2025<span class="p-org">Madison Cyber Labs</span></div>
         <div>
           <h3 class="project-title">Assistive Biomedical Device Prototyping</h3>
@@ -766,7 +846,7 @@
         </div>
       </div>
 
-      <div class="project">
+      <div class="project reveal">
         <div class="project-meta">2025<span class="p-org">Madison Cyber Labs</span></div>
         <div>
           <h3 class="project-title">AI-Based Accessibility Tools Evaluation</h3>
@@ -775,7 +855,7 @@
         </div>
       </div>
 
-      <div class="project">
+      <div class="project reveal">
         <div class="project-meta">2025<span class="p-org">University of Utah, NIH SURF</span></div>
         <div>
           <h3 class="project-title">Oil Spill &amp; Microplastics Interaction Analysis</h3>
@@ -790,7 +870,7 @@
 
 <section id="publications">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div>
         <div class="section-kicker">Research Record</div>
         <h2 class="section-title">Presentations &amp; publications</h2>
@@ -799,11 +879,11 @@
 
     <div class="pub-group">
       <h4>Oral Presentations</h4>
-      <div class="pub-item">
+      <div class="pub-item reveal">
         <div class="pub-date">2026</div>
         <div class="pub-text">Nest Success and Habitat Characteristics of a First-Year Great Blue Heron Rookery. <span class="pub-venue">IALE-NA, Athens, GA.</span></div>
       </div>
-      <div class="pub-item">
+      <div class="pub-item reveal">
         <div class="pub-date">2025</div>
         <div class="pub-text">Survey of Prairie Lakes for Microplastics in Eastern South Dakota. <span class="pub-venue">DSU Research Seminar.</span></div>
       </div>
@@ -811,15 +891,15 @@
 
     <div class="pub-group">
       <h4>Poster Presentations</h4>
-      <div class="pub-item">
+      <div class="pub-item reveal">
         <div class="pub-date">2026</div>
         <div class="pub-text">Detection of Neonicotinoid in Eggshells of Wild Bird Species. <span class="pub-venue">South Dakota Academy of Science.</span></div>
       </div>
-      <div class="pub-item">
+      <div class="pub-item reveal">
         <div class="pub-date">2025</div>
         <div class="pub-text">High Throughput Experimentation on Oil Spills and Microplastics. <span class="pub-venue">University of Utah Summer Conference.</span></div>
       </div>
-      <div class="pub-item">
+      <div class="pub-item reveal">
         <div class="pub-date">2025</div>
         <div class="pub-text">Survey of Prairie Lakes for Microplastics in Eastern South Dakota. <span class="pub-venue">NCUR, Pittsburgh, PA.</span></div>
       </div>
@@ -827,11 +907,11 @@
 
     <div class="pub-group">
       <h4>Manuscript &amp; Published Abstract</h4>
-      <div class="pub-item">
+      <div class="pub-item reveal">
         <div class="pub-date">In prep</div>
         <div class="pub-text">Detection of Neonicotinoid in Eggshells of Wild Bird Species across South Dakota. <span class="pub-venue">Target journal TBD, with Dr. Kristel Bakker.</span></div>
       </div>
-      <div class="pub-item">
+      <div class="pub-item reveal">
         <div class="pub-date">2025</div>
         <div class="pub-text">High Throughput Experimentation and Data Analysis Revealing the Intricate Interplay of Oil Spills and Microplastics. <span class="pub-venue">Range 26:12, with Dr. Samira Shiri.</span></div>
       </div>
@@ -841,7 +921,7 @@
 
 <section id="media">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div>
         <div class="section-kicker">Media</div>
         <h2 class="section-title">In conversation &amp; in print</h2>
@@ -878,13 +958,13 @@
 
 <section id="interests">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div>
         <div class="section-kicker">Beyond the Lab</div>
         <h2 class="section-title">Interests</h2>
       </div>
     </div>
-    <div class="interest-col">
+    <div class="interest-col reveal">
       <h4>Research Interests</h4>
       <ul class="interest-list">
         <li class="interest-item"><span class="interest-name">Assistive technology &amp; HCI</span><span class="interest-note">co-design methods, wearable devices</span></li>
@@ -893,7 +973,7 @@
         <li class="interest-item"><span class="interest-name">Bioinformatics infrastructure</span><span class="interest-note">workflow automation, data pipelines</span></li>
       </ul>
     </div>
-    <div class="interest-col fun-col">
+    <div class="interest-col fun-col reveal">
       <h4>Fun Interests</h4>
       <p class="fun-text">In my free time, you'd find me binge-watching The Big Bang Theory, learning how to swim, playing tennis, or reading African literature and Greek mythology retellings.</p>
       <div class="books-arrow">
@@ -922,16 +1002,16 @@
 
 <section id="vision">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div>
         <div class="section-kicker">Looking Ahead</div>
         <h2 class="section-title">Where this is going</h2>
       </div>
     </div>
-    <div class="vision-card">
+    <div class="vision-card reveal">
       <div class="v-label">We Make You</div>
       <p>The idea took shape while I was working on the Snoezelen environment at Madison Cyber Labs &mdash; sitting with users who have cognitive and sensory disabilities, watching which lighting or textures actually helped and which ones I'd only assumed would. The same thing happened during hearing aid benchmarking, when the features that mattered most to users weren't the ones the spec sheets emphasized. I kept noticing the gap between how assistive devices get designed and how they're actually used.</p>
-      <p>We Make You is my answer to that gap: a future venture built around co-designing devices with the people who'll use them, from the first sketch, not the final usability test. Pursuing a PhD in HCI and assistive technology is the deliberate next step toward eventually making this a reality.</p>
+      <p>We Make You is my answer to that gap: a future venture built around co-designing devices with the people who'll use them, from the first sketch, not the final usability test. Pursuing a PhD in HCI and assistive technology is the deliberate next step toward eventually building this for real.</p>
     </div>
   </div>
 </section>
@@ -963,6 +1043,53 @@
       navToggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+    document.querySelector('.thread')?.classList.add('is-drawn');
+    document.querySelectorAll('.thread-node').forEach(el => el.classList.add('is-visible'));
+  } else {
+    // General scroll-reveal for sections, cards, and list items
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Signature animation: the connective-tissue thread draws itself in,
+    // then each research stage pops in along the line as it's reached.
+    const thread = document.querySelector('.thread');
+    const threadNodes = document.querySelectorAll('.thread-node');
+
+    if (thread) {
+      const threadObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            thread.classList.add('is-drawn');
+            threadObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      threadObserver.observe(thread);
+    }
+
+    const nodeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('is-visible'), i * 80);
+          nodeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    threadNodes.forEach(node => nodeObserver.observe(node));
+  }
 </script>
 
 </body>
