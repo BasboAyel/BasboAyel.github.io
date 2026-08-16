@@ -10,1610 +10,1282 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --forest: #1F3A2E;
-  --forest-deep: #142720;
-  --gold: #C89B3C;
-  --gold-light: #E0BE71;
-  --cream: #F7F3E9;
-  --rust: #A8553B;
-  --ink: #22281F;
-  --line: rgba(31, 58, 46, 0.14);
-
-  --serif: 'Fraunces', serif;
-  --sans: 'Work Sans', sans-serif;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background: var(--cream);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-weight: 400;
-  line-height: 1.6;
-  overflow-x: hidden;
-  cursor: default;
-}
-
-/* =========================================================
-   PAGE LOADER
-========================================================= */
-
-.page-loader {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: var(--forest);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  animation: loaderOut 1s cubic-bezier(.77,0,.18,1) 0.5s forwards;
-}
-
-.loader-name {
-  color: var(--cream);
-  font-family: var(--serif);
-  font-size: clamp(2rem, 6vw, 5rem);
-  opacity: 0;
-  transform: translateY(30px);
-  animation: loaderText 0.8s ease forwards;
-}
-
-@keyframes loaderText {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes loaderOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-/* =========================================================
-   CUSTOM SCROLL PROGRESS
-========================================================= */
-
-.scroll-progress {
-  position: fixed;
-  left: 18px;
-  top: 50%;
-  width: 2px;
-  height: 100px;
-  transform: translateY(-50%);
-  background: rgba(31, 58, 46, 0.12);
-  z-index: 100;
-  overflow: hidden;
-}
-
-.scroll-progress-bar {
-  width: 100%;
-  height: 100%;
-  background: var(--gold);
-  transform-origin: top;
-  transform: scaleY(0);
-}
-
-/* =========================================================
-   GENERAL
-========================================================= */
-
-a {
-  color: inherit;
-}
-
-:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-.wrap {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 56px;
-}
-
-@media (max-width: 640px) {
-  .wrap {
-    padding: 0 24px;
+  :root {
+    --forest: #1F3A2E;
+    --forest-deep: #142720;
+    --gold: #C89B3C;
+    --gold-light: #E0BE71;
+    --cream: #F7F3E9;
+    --rust: #A8553B;
+    --ink: #22281F;
+    --line: rgba(31, 58, 46, 0.14);
+    --serif: 'Fraunces', serif;
+    --sans: 'Work Sans', sans-serif;
   }
 
-  .scroll-progress {
-    display: none;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-}
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
+  html {
+    scroll-behavior: smooth;
+  }
 
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(247, 243, 233, 0.86);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid transparent;
-  transition:
-    background 0.35s ease,
-    border-color 0.35s ease,
-    box-shadow 0.35s ease;
-}
-
-nav.scrolled {
-  background: rgba(247, 243, 233, 0.96);
-  border-color: var(--line);
-  box-shadow: 0 10px 35px rgba(20, 39, 32, 0.05);
-}
-
-nav .wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 68px;
-}
-
-.nav-name {
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 1.25rem;
-  letter-spacing: 0.005em;
-  color: var(--forest);
-  text-decoration: none;
-  position: relative;
-}
-
-.nav-name::after {
-  content: '.';
-  color: var(--gold);
-  transition: color 0.3s ease;
-}
-
-.nav-name:hover::after {
-  color: var(--rust);
-}
-
-.nav-links {
-  display: flex;
-  gap: 28px;
-  list-style: none;
-}
-
-.nav-links li {
-  overflow: hidden;
-}
-
-.nav-links a {
-  text-decoration: none;
-  font-size: 0.88rem;
-  color: var(--ink);
-  opacity: 0.7;
-  position: relative;
-  padding-bottom: 4px;
-  transition:
-    opacity 0.25s ease,
-    color 0.25s ease;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-.nav-links a:hover {
-  opacity: 1;
-  color: var(--rust);
-}
-
-.nav-links a:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
-  position: relative;
-}
-
-.nav-toggle span,
-.nav-toggle span::before,
-.nav-toggle span::after {
-  content: '';
-  position: absolute;
-  height: 2px;
-  width: 22px;
-  background: var(--forest);
-  left: 5px;
-  transition: transform 0.3s ease;
-}
-
-.nav-toggle span {
-  top: 15px;
-}
-
-.nav-toggle span::before {
-  top: -7px;
-}
-
-.nav-toggle span::after {
-  top: 7px;
-}
-
-.nav-toggle.active span {
-  background: transparent;
-}
-
-.nav-toggle.active span::before {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.nav-toggle.active span::after {
-  transform: translateY(-7px) rotate(-45deg);
-}
-
-@media (max-width: 720px) {
-  .nav-links {
-    position: fixed;
-    top: 68px;
-    left: 0;
-    right: 0;
-    flex-direction: column;
+  body {
     background: var(--cream);
-    padding: 20px 32px 28px;
-    border-bottom: 1px solid var(--line);
-    gap: 16px;
-    transform: translateY(-10px);
-    opacity: 0;
-    pointer-events: none;
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s ease;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
   }
 
-  .nav-links.open {
+  a {
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  .wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 56px;
+  }
+
+  @media (max-width: 640px) {
+    .wrap {
+      padding: 0 24px;
+    }
+  }
+
+  /* =========================================================
+     NAV
+     ========================================================= */
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(247, 243, 233, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    transition: box-shadow 0.3s ease;
+  }
+
+  nav.scrolled {
+    box-shadow: 0 8px 25px rgba(20, 39, 32, 0.07);
+  }
+
+  nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+
+  .nav-name {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: 0.005em;
+    color: var(--forest);
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-name::after {
+    content: '.';
+    color: var(--gold);
+  }
+
+  .nav-name:hover {
+    transform: translateX(3px);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.88rem;
+    color: var(--ink);
+    opacity: 0.75;
+    transition: opacity 0.2s ease, color 0.2s ease;
+    letter-spacing: 0.01em;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 1px;
+    background: var(--rust);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-links a:hover {
     opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+    color: var(--rust);
+  }
+
+  .nav-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .nav-links a.active {
+    opacity: 1;
+    color: var(--rust);
+  }
+
+  .nav-links a.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 
   .nav-toggle {
-    display: block;
-  }
-}
-
-/* =========================================================
-   HERO
-========================================================= */
-
-header.hero {
-  min-height: calc(100vh - 68px);
-  padding: 100px 0 88px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-header.hero::before {
-  content: '';
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: rgba(200, 155, 60, 0.07);
-  top: -220px;
-  right: -180px;
-  filter: blur(3px);
-  animation: heroOrb 10s ease-in-out infinite alternate;
-}
-
-@keyframes heroOrb {
-  from {
-    transform: translate(0, 0) scale(1);
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    position: relative;
   }
 
-  to {
-    transform: translate(-30px, 35px) scale(1.08);
-  }
-}
-
-.hero .wrap {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px;
-  align-items: center;
-}
-
-.hero-copy {
-  position: relative;
-  z-index: 2;
-}
-
-.eyebrow {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--rust);
-  font-weight: 600;
-  margin-bottom: 18px;
-}
-
-h1.display {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(3.2rem, 7vw, 5.2rem);
-  line-height: 1.05;
-  color: var(--forest);
-  letter-spacing: -0.01em;
-  overflow: hidden;
-}
-
-h1.display .hero-word {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(100%);
-  animation: heroWord 1s cubic-bezier(.16,1,.3,1) forwards;
-}
-
-h1.display .hero-word:nth-child(2) {
-  animation-delay: 0.12s;
-}
-
-@keyframes heroWord {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.hero-tagline {
-  margin-top: 20px;
-  font-family: var(--serif);
-  font-size: 1.35rem;
-  line-height: 1.4;
-  color: var(--forest);
-  max-width: 44ch;
-  opacity: 0;
-  transform: translateY(25px);
-  animation: heroFade 0.9s ease 0.45s forwards;
-}
-
-.hero-sub {
-  margin-top: 18px;
-  font-size: 1.08rem;
-  color: var(--ink);
-  opacity: 0;
-  max-width: 46ch;
-  transform: translateY(25px);
-  animation: heroFade 0.9s ease 0.65s forwards;
-}
-
-.hero-actions {
-  margin-top: 34px;
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: heroFade 0.9s ease 0.82s forwards;
-}
-
-@keyframes heroFade {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 22px;
-  border-radius: 3px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease;
-}
-
-.btn:hover {
-  transform: translateY(-3px);
-}
-
-.btn-primary {
-  background: var(--forest);
-  color: var(--cream);
-  border: 1px solid var(--forest);
-}
-
-.btn-primary::before,
-.btn-secondary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  transform: translateX(-101%);
-  transition: transform 0.35s cubic-bezier(.77,0,.18,1);
-}
-
-.btn-primary::before {
-  background: var(--gold);
-}
-
-.btn-secondary::before {
-  background: var(--forest);
-}
-
-.btn:hover::before {
-  transform: translateX(0);
-}
-
-.btn span {
-  position: relative;
-  z-index: 2;
-}
-
-.btn-primary:hover {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: var(--forest);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--forest);
-  border: 1px solid var(--forest);
-}
-
-.btn-secondary:hover {
-  background: var(--forest);
-  color: var(--cream);
-}
-
-.hero-signature {
-  margin-top: 26px;
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: var(--rust);
-  max-width: 46ch;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: heroFade 0.9s ease 1s forwards;
-}
-
-.portrait-wrap {
-  perspective: 1000px;
-  display: flex;
-  justify-content: flex-end;
-  opacity: 0;
-  transform: translateX(70px);
-  animation: portraitIn 1.2s cubic-bezier(.16,1,.3,1) 0.45s forwards;
-}
-
-@keyframes portraitIn {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.portrait {
-  width: 100%;
-  max-width: 460px;
-  margin-left: auto;
-  aspect-ratio: 4 / 5;
-  border-radius: 4px;
-  background: linear-gradient(
-    160deg,
-    var(--forest) 0%,
-    var(--forest-deep) 100%
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 24px 48px -20px rgba(20, 39, 32, 0.45);
-  transition:
-    transform 0.6s cubic-bezier(.16,1,.3,1),
-    box-shadow 0.4s ease;
-}
-
-.portrait:hover {
-  transform: rotateY(-2deg) rotateX(2deg) translateY(-8px);
-  box-shadow: 0 35px 60px -22px rgba(20, 39, 32, 0.5);
-}
-
-.portrait::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(224, 190, 113, 0.2);
-  pointer-events: none;
-}
-
-.portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 1s cubic-bezier(.16,1,.3,1);
-}
-
-.portrait:hover img {
-  transform: scale(1.035);
-}
-
-.portrait-note {
-  position: absolute;
-  bottom: 14px;
-  left: 14px;
-  right: 14px;
-  font-size: 0.68rem;
-  color: var(--cream);
-  opacity: 0.55;
-  letter-spacing: 0.03em;
-  z-index: 2;
-}
-
-.hero-scroll {
-  position: absolute;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  color: var(--rust);
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  opacity: 0.7;
-  animation: scrollFloat 2s ease-in-out infinite;
-}
-
-.hero-scroll-line {
-  width: 1px;
-  height: 34px;
-  background: var(--gold);
-}
-
-@keyframes scrollFloat {
-  0%, 100% {
-    transform: translateX(-50%) translateY(0);
+  .nav-toggle span,
+  .nav-toggle span::before,
+  .nav-toggle span::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 22px;
+    background: var(--forest);
+    left: 5px;
+    transition: transform 0.25s ease;
   }
 
-  50% {
-    transform: translateX(-50%) translateY(7px);
+  .nav-toggle span {
+    top: 15px;
   }
-}
 
-@media (max-width: 720px) {
+  .nav-toggle span::before {
+    top: -7px;
+  }
+
+  .nav-toggle span::after {
+    top: 7px;
+  }
+
+  @media (max-width: 720px) {
+    .nav-links {
+      position: fixed;
+      top: 68px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--cream);
+      padding: 20px 32px 28px;
+      border-bottom: 1px solid var(--line);
+      gap: 16px;
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .nav-toggle {
+      display: block;
+    }
+  }
+
+  /* =========================================================
+     HERO
+     ========================================================= */
+
   header.hero {
-    min-height: auto;
-    padding: 64px 0 80px;
+    padding: 100px 0 88px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header.hero::before {
+    content: '';
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.055;
+    top: 30px;
+    right: -150px;
+    pointer-events: none;
+    animation: floatOrb 8s ease-in-out infinite;
+  }
+
+  header.hero::after {
+    content: '';
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    opacity: 0.12;
+    bottom: 20px;
+    left: -100px;
+    pointer-events: none;
+    animation: floatOrb 10s ease-in-out infinite reverse;
+  }
+
+  @keyframes floatOrb {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(15px, -18px);
+    }
   }
 
   .hero .wrap {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
   }
 
-  .portrait-wrap {
-    justify-content: center;
+  .hero .wrap > div:first-child > * {
+    opacity: 0;
+    animation: heroReveal 0.85s cubic-bezier(.22, 1, .36, 1) forwards;
+  }
+
+  .hero h1 {
+    animation-delay: 0.05s !important;
+  }
+
+  .hero-tagline {
+    animation-delay: 0.15s !important;
+  }
+
+  .hero-sub {
+    animation-delay: 0.25s !important;
+  }
+
+  .hero-actions {
+    animation-delay: 0.35s !important;
+  }
+
+  .hero-signature {
+    animation-delay: 0.45s !important;
+  }
+
+  @keyframes heroReveal {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .eyebrow {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--rust);
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  h1.display {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(3.2rem, 7vw, 5.2rem);
+    line-height: 1.05;
+    color: var(--forest);
+    letter-spacing: -0.01em;
+  }
+
+  h1.display em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .hero-tagline {
+    margin-top: 20px;
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    line-height: 1.4;
+    color: var(--forest);
+    max-width: 44ch;
+  }
+
+  .hero-tagline em {
+    font-style: italic;
+  }
+
+  .hero-sub {
+    margin-top: 18px;
+    font-size: 1.08rem;
+    color: var(--ink);
+    opacity: 0.82;
+    max-width: 46ch;
+  }
+
+  .hero-actions {
+    margin-top: 34px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.25s ease;
+    letter-spacing: 0.01em;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 80%;
+    height: 100%;
+    background: rgba(255,255,255,0.13);
+    transform: skewX(-20deg);
+    transition: left 0.45s ease;
+  }
+
+  .btn:hover::after {
+    left: 130%;
+  }
+
+  .btn:hover {
+    transform: translateY(-3px);
+  }
+
+  .btn-primary {
+    background: var(--forest);
+    color: var(--cream);
+    border: 1px solid var(--forest);
+  }
+
+  .btn-primary:hover {
+    background: var(--forest-deep);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--forest);
+    border: 1px solid var(--forest);
+  }
+
+  .btn-secondary:hover {
+    background: var(--forest);
+    color: var(--cream);
+  }
+
+  .hero-signature {
+    margin-top: 26px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--rust);
+    max-width: 46ch;
   }
 
   .portrait {
-    max-width: 320px;
+    width: 100%;
+    max-width: 460px;
+    margin-left: auto;
+    aspect-ratio: 4 / 5;
+    border-radius: 4px;
+    background: linear-gradient(160deg, var(--forest) 0%, var(--forest-deep) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 24px 48px -20px rgba(20, 39, 32, 0.45);
+    opacity: 0;
+    animation: portraitReveal 1s cubic-bezier(.22, 1, .36, 1) 0.2s forwards;
+    transition:
+      transform 0.5s cubic-bezier(.22, 1, .36, 1),
+      box-shadow 0.5s ease;
   }
 
-  .hero-scroll {
-    display: none;
-  }
-}
-
-/* =========================================================
-   SECTIONS
-========================================================= */
-
-section {
-  padding: 100px 0;
-  border-top: 1px solid var(--line);
-  position: relative;
-}
-
-.section-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 56px;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.section-head > div {
-  position: relative;
-}
-
-.section-number {
-  position: absolute;
-  left: -45px;
-  top: 3px;
-  font-size: 0.68rem;
-  color: var(--gold);
-  letter-spacing: 0.1em;
-  opacity: 0.8;
-}
-
-h2.section-title {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(1.9rem, 4vw, 2.5rem);
-  color: var(--forest);
-  overflow: hidden;
-}
-
-.section-title-inner {
-  display: inline-block;
-  transform: translateY(105%);
-  opacity: 0;
-  transition:
-    transform 0.9s cubic-bezier(.16,1,.3,1),
-    opacity 0.7s ease;
-}
-
-.reveal.visible .section-title-inner {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.section-kicker {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.13em;
-  color: var(--rust);
-  font-weight: 600;
-  margin-bottom: 7px;
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(45px);
-  transition:
-    opacity 0.9s ease,
-    transform 0.9s cubic-bezier(.16,1,.3,1);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* =========================================================
-   ABOUT
-========================================================= */
-
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-}
-
-.about-grid p {
-  margin-bottom: 18px;
-  opacity: 0.88;
-}
-
-.about-grid p:last-child {
-  margin-bottom: 0;
-}
-
-.about-copy {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.about-copy.visible {
-  animation: revealUp 0.9s cubic-bezier(.16,1,.3,1) forwards;
-}
-
-.fact-list {
-  list-style: none;
-  border-top: 1px solid var(--line);
-}
-
-.fact-list li {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 0.92rem;
-  transition:
-    padding-left 0.3s ease,
-    background 0.3s ease;
-}
-
-.fact-list li:hover {
-  padding-left: 10px;
-}
-
-.fact-label {
-  color: var(--rust);
-  font-weight: 500;
-}
-
-.fact-value {
-  text-align: right;
-  opacity: 0.85;
-}
-
-@keyframes revealUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 720px) {
-  .about-grid {
-    grid-template-columns: 1fr;
+  @keyframes portraitReveal {
+    from {
+      opacity: 0;
+      transform: translateY(35px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 
-  .section-number {
-    display: none;
-  }
-}
-
-/* =========================================================
-   RESEARCH THREAD
-========================================================= */
-
-.thread-section {
-  border-top: 1px solid var(--line);
-  background: var(--forest);
-  color: var(--cream);
-  overflow: hidden;
-}
-
-.thread-section .section-kicker {
-  color: var(--gold-light);
-}
-
-.thread-section h2.section-title {
-  color: var(--cream);
-}
-
-.thread-section .lede {
-  max-width: 60ch;
-  opacity: 0.82;
-  margin-bottom: 65px;
-  font-size: 1rem;
-}
-
-.thread {
-  position: relative;
-  padding-left: 35px;
-}
-
-.thread::before {
-  content: '';
-  position: absolute;
-  left: 5px;
-  top: 6px;
-  bottom: 6px;
-  width: 1px;
-  background: linear-gradient(
-    var(--gold-light),
-    rgba(224,190,113,0.05)
-  );
-}
-
-.thread-progress {
-  position: absolute;
-  left: 4px;
-  top: 6px;
-  width: 3px;
-  height: 0;
-  background: var(--gold);
-  z-index: 2;
-  transition: height 0.15s linear;
-}
-
-.thread-node {
-  position: relative;
-  padding-bottom: 60px;
-  opacity: 0;
-  transform: translateX(-25px);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s cubic-bezier(.16,1,.3,1);
-}
-
-.thread-node.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.thread-node:nth-child(2) {
-  transition-delay: 0.08s;
-}
-
-.thread-node:nth-child(3) {
-  transition-delay: 0.16s;
-}
-
-.thread-node:nth-child(4) {
-  transition-delay: 0.24s;
-}
-
-.thread-node:last-child {
-  padding-bottom: 0;
-}
-
-.thread-node::before {
-  content: '';
-  position: absolute;
-  left: -35px;
-  top: 5px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--forest);
-  border: 2px solid var(--gold);
-  box-shadow: 0 0 0 0 rgba(224,190,113,0.5);
-  transition:
-    background 0.35s ease,
-    box-shadow 0.35s ease,
-    transform 0.35s ease;
-}
-
-.thread-node.visible::before {
-  background: var(--gold);
-  box-shadow: 0 0 0 7px rgba(224,190,113,0.08);
-  transform: scale(1.15);
-}
-
-.thread-node .t-field {
-  font-family: var(--serif);
-  font-size: 1.35rem;
-  color: var(--gold-light);
-  margin-bottom: 7px;
-}
-
-.thread-node .t-desc {
-  opacity: 0.82;
-  max-width: 58ch;
-  font-size: 0.95rem;
-}
-
-/* =========================================================
-   PROJECTS
-========================================================= */
-
-.project-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.project {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 28px;
-  padding: 34px 20px 34px 0;
-  border-bottom: 1px solid var(--line);
-  position: relative;
-  transition:
-    padding-left 0.4s cubic-bezier(.16,1,.3,1),
-    background 0.4s ease;
-  overflow: hidden;
-}
-
-.project::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--gold);
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: transform 0.4s cubic-bezier(.16,1,.3,1);
-}
-
-.project:hover {
-  padding-left: 20px;
-  background: rgba(200,155,60,0.035);
-}
-
-.project:hover::before {
-  transform: scaleY(1);
-  transform-origin: top;
-}
-
-.project:first-child {
-  padding-top: 0;
-}
-
-.project-meta {
-  font-size: 0.8rem;
-  color: var(--rust);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  transition: transform 0.35s ease;
-}
-
-.project:hover .project-meta {
-  transform: translateX(5px);
-}
-
-.project-meta .p-org {
-  display: block;
-  opacity: 0.65;
-  color: var(--ink);
-  margin-top: 4px;
-  font-weight: 400;
-}
-
-h3.project-title {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 1.32rem;
-  color: var(--forest);
-  margin-bottom: 8px;
-  transition:
-    transform 0.35s ease,
-    color 0.35s ease;
-}
-
-.project:hover .project-title {
-  transform: translateX(5px);
-  color: var(--rust);
-}
-
-.project-desc {
-  opacity: 0.85;
-  font-size: 0.95rem;
-  max-width: 62ch;
-  transition: opacity 0.35s ease;
-}
-
-.project:hover .project-desc {
-  opacity: 1;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 14px;
-}
-
-.tag {
-  font-size: 0.74rem;
-  padding: 4px 10px;
-  border: 1px solid var(--line);
-  border-radius: 100px;
-  color: var(--forest);
-  opacity: 0.8;
-  transition:
-    background 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.25s ease;
-}
-
-.project:hover .tag {
-  border-color: rgba(200,155,60,0.45);
-}
-
-.tag:hover {
-  background: var(--forest);
-  color: var(--cream);
-  border-color: var(--forest);
-  transform: translateY(-2px);
-}
-
-@media (max-width: 720px) {
-  .project {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    padding-right: 0;
+  .portrait:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 32px 65px -22px rgba(20, 39, 32, 0.55);
   }
 
-  .project:hover {
-    padding-left: 14px;
-  }
-}
-
-/* =========================================================
-   PUBLICATIONS
-========================================================= */
-
-.pub-group {
-  margin-bottom: 42px;
-}
-
-.pub-group:last-child {
-  margin-bottom: 0;
-}
-
-.pub-group h4 {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--rust);
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-
-.pub-item {
-  padding: 16px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 0.93rem;
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 20px;
-  transition:
-    padding-left 0.3s ease,
-    background 0.3s ease;
-}
-
-.pub-item:hover {
-  padding-left: 10px;
-}
-
-.pub-item:last-child {
-  border-bottom: none;
-}
-
-.pub-date {
-  color: var(--rust);
-  font-weight: 500;
-  opacity: 0.9;
-}
-
-.pub-text {
-  opacity: 0.88;
-}
-
-.pub-venue {
-  font-style: italic;
-  opacity: 0.7;
-}
-
-@media (max-width: 600px) {
-  .pub-item {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
-}
-
-/* =========================================================
-   MEDIA
-========================================================= */
-
-.media-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 48px;
-}
-
-.video-frame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: var(--forest-deep);
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 20px 50px -25px rgba(20,39,32,0.5);
-}
-
-.video-frame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(224,190,113,0.2);
-  pointer-events: none;
-}
-
-.video-frame iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  display: block;
-}
-
-.video-caption {
-  margin-top: 12px;
-  font-size: 0.84rem;
-  opacity: 0.65;
-}
-
-.press-list {
-  list-style: none;
-}
-
-.press-item {
-  padding: 18px 0;
-  border-bottom: 1px solid var(--line);
-  transition:
-    padding-left 0.35s ease,
-    background 0.35s ease;
-}
-
-.press-item:first-child {
-  padding-top: 0;
-}
-
-.press-item:hover {
-  padding-left: 12px;
-}
-
-.press-item a {
-  text-decoration: none;
-  color: var(--forest);
-  font-weight: 500;
-  font-size: 0.98rem;
-  transition: color 0.25s ease;
-}
-
-.press-item a:hover {
-  color: var(--rust);
-}
-
-.press-item .press-source {
-  display: block;
-  font-size: 0.8rem;
-  color: var(--rust);
-  opacity: 0.85;
-  margin-top: 4px;
-}
-
-@media (max-width: 720px) {
-  .media-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =========================================================
-   INTERESTS
-========================================================= */
-
-.interest-col {
-  margin-bottom: 50px;
-}
-
-.interest-col:last-child {
-  margin-bottom: 0;
-}
-
-.interest-col h4 {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--rust);
-  font-weight: 600;
-  margin-bottom: 18px;
-}
-
-.interest-list {
-  list-style: none;
-}
-
-.interest-item {
-  padding: 16px 0;
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  transition:
-    padding-left 0.3s ease,
-    background 0.3s ease;
-}
-
-.interest-item:hover {
-  padding-left: 10px;
-}
-
-.interest-item:last-child {
-  border-bottom: none;
-}
-
-.interest-name {
-  font-weight: 500;
-  color: var(--forest);
-  font-size: 0.95rem;
-}
-
-.interest-note {
-  opacity: 0.65;
-  font-size: 0.86rem;
-  text-align: right;
-  max-width: 55%;
-}
-
-.fun-text {
-  font-family: var(--serif);
-  font-size: 1.15rem;
-  line-height: 1.55;
-  color: var(--forest);
-  max-width: 62ch;
-  opacity: 0.92;
-}
-
-.books-arrow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 26px 0 22px;
-  color: var(--rust);
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 600;
-}
-
-.books-arrow svg {
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
-}
-
-.books-arrow:hover svg {
-  transform: translateX(7px);
-}
-
-.books-row {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 148px));
-  gap: 20px;
-}
-
-.book-card {
-  display: flex;
-  flex-direction: column;
-  perspective: 700px;
-}
-
-.book-cover {
-  aspect-ratio: 2 / 3;
-  border-radius: 3px;
-  overflow: hidden;
-  box-shadow: 0 14px 30px -16px rgba(31,58,46,0.4);
-  position: relative;
-  transition:
-    transform 0.5s cubic-bezier(.16,1,.3,1),
-    box-shadow 0.4s ease;
-}
-
-.book-cover::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0.18),
-    transparent 35%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.book-card:hover .book-cover {
-  transform:
-    translateY(-10px)
-    rotateY(-4deg)
-    rotateX(2deg);
-  box-shadow: 0 28px 45px -18px rgba(31,58,46,0.45);
-}
-
-.book-card:hover .book-cover::after {
-  opacity: 1;
-}
-
-.book-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
-}
-
-.book-card:hover img {
-  transform: scale(1.025);
-}
-
-.book-meta {
-  margin-top: 10px;
-  font-size: 0.78rem;
-}
-
-.book-meta .b-author {
-  display: block;
-  color: var(--forest);
-  font-weight: 500;
-}
-
-.book-meta .b-note {
-  display: block;
-  opacity: 0.6;
-  margin-top: 2px;
-}
-
-@media (max-width: 640px) {
-  .books-row {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-}
-
-@media (max-width: 720px) {
-  .interest-note {
-    text-align: left;
-    max-width: 100%;
+  .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(.22, 1, .36, 1);
   }
 
-  .interest-item {
-    flex-direction: column;
-    gap: 4px;
+  .portrait:hover img {
+    transform: scale(1.035);
   }
-}
 
-/* =========================================================
-   VISION
-========================================================= */
-
-.vision-card {
-  background: var(--cream);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--gold);
-  padding: 46px 50px;
-  border-radius: 2px;
-  position: relative;
-  overflow: hidden;
-  transition:
-    transform 0.45s cubic-bezier(.16,1,.3,1),
-    box-shadow 0.45s ease;
-}
-
-.vision-card::before {
-  content: '';
-  position: absolute;
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  right: -100px;
-  top: -100px;
-  background: rgba(200,155,60,0.06);
-  transition: transform 0.6s ease;
-}
-
-.vision-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 25px 50px -30px rgba(20,39,32,0.45);
-}
-
-.vision-card:hover::before {
-  transform: scale(1.4);
-}
-
-.vision-card .v-label {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.5rem;
-  color: var(--forest);
-  margin-bottom: 16px;
-  position: relative;
-}
-
-.vision-card p {
-  opacity: 0.85;
-  max-width: 66ch;
-  margin-bottom: 16px;
-  position: relative;
-}
-
-.vision-card p:last-child {
-  margin-bottom: 0;
-}
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer {
-  border-top: 1px solid var(--line);
-  padding: 70px 0 44px;
-}
-
-.footer-grid {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 24px;
-}
-
-.footer-name {
-  font-family: var(--serif);
-  font-size: clamp(1.7rem, 4vw, 2.5rem);
-  color: var(--forest);
-}
-
-.footer-links {
-  display: flex;
-  gap: 26px;
-  list-style: none;
-}
-
-.footer-links a {
-  text-decoration: none;
-  font-size: 0.88rem;
-  color: var(--rust);
-  border-bottom: 1px solid transparent;
-  padding-bottom: 3px;
-  transition:
-    border-color 0.25s ease,
-    transform 0.25s ease;
-  display: inline-block;
-}
-
-.footer-links a:hover {
-  border-color: var(--rust);
-  transform: translateY(-3px);
-}
-
-.footer-note {
-  margin-top: 55px;
-  font-size: 0.76rem;
-  opacity: 0.5;
-}
-
-/* =========================================================
-   CURSOR DECORATION
-========================================================= */
-
-.cursor-dot {
-  position: fixed;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--gold);
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition:
-    width 0.25s ease,
-    height 0.25s ease,
-    opacity 0.3s ease;
-}
-
-.cursor-ring {
-  position: fixed;
-  width: 30px;
-  height: 30px;
-  border: 1px solid rgba(200,155,60,0.55);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9997;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition:
-    width 0.35s ease,
-    height 0.35s ease,
-    opacity 0.3s ease;
-}
-
-.cursor-active .cursor-dot {
-  width: 11px;
-  height: 11px;
-}
-
-.cursor-active .cursor-ring {
-  width: 45px;
-  height: 45px;
-}
-
-@media (hover: none), (pointer: coarse) {
-  .cursor-dot,
-  .cursor-ring {
-    display: none;
+  .portrait-initials {
+    font-family: var(--serif);
+    font-size: 4.2rem;
+    color: var(--gold-light);
+    opacity: 0.85;
+    font-weight: 400;
   }
-}
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+  .portrait-note {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
+    font-size: 0.68rem;
+    color: var(--cream);
+    opacity: 0.55;
+    letter-spacing: 0.03em;
+  }
 
-@media (max-width: 800px) {
+  @media (max-width: 720px) {
+    .hero .wrap {
+      grid-template-columns: 1fr;
+    }
+
+    .portrait {
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    header.hero {
+      padding: 64px 0 56px;
+    }
+  }
+
+  /* =========================================================
+     SECTION SHELL
+     ========================================================= */
+
   section {
     padding: 76px 0;
+    border-top: 1px solid var(--line);
   }
 
   .section-head {
-    margin-bottom: 40px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 44px;
+    gap: 24px;
+    flex-wrap: wrap;
   }
 
-  .vision-card {
-    padding: 34px 28px;
+  h2.section-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.9rem;
+    color: var(--forest);
   }
-}
+
+  .section-kicker {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--rust);
+    font-weight: 600;
+  }
+
+  /* =========================================================
+     SCROLL REVEAL
+     ========================================================= */
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(45px);
+    transition:
+      opacity 0.8s cubic-bezier(.22, 1, .36, 1),
+      transform 0.8s cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 {
+    transition-delay: 0.08s;
+  }
+
+  .reveal-delay-2 {
+    transition-delay: 0.16s;
+  }
+
+  .reveal-delay-3 {
+    transition-delay: 0.24s;
+  }
+
+  /* =========================================================
+     ABOUT
+     ========================================================= */
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .about-grid p {
+    margin-bottom: 16px;
+    opacity: 0.88;
+  }
+
+  .about-grid p:last-child {
+    margin-bottom: 0;
+  }
+
+  .fact-list {
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .fact-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.92rem;
+    transition:
+      padding-left 0.3s ease,
+      background 0.3s ease;
+  }
+
+  .fact-list li:hover {
+    padding-left: 8px;
+  }
+
+  .fact-label {
+    color: var(--rust);
+    font-weight: 500;
+  }
+
+  .fact-value {
+    text-align: right;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 720px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* =========================================================
+     THREAD
+     ========================================================= */
+
+  .thread-section {
+    border-top: 1px solid var(--line);
+    background: var(--forest);
+    color: var(--cream);
+    overflow: hidden;
+  }
+
+  .thread-section .section-kicker {
+    color: var(--gold-light);
+  }
+
+  .thread-section h2.section-title {
+    color: var(--cream);
+  }
+
+  .thread-section .lede {
+    max-width: 60ch;
+    opacity: 0.82;
+    margin-bottom: 56px;
+    font-size: 1rem;
+  }
+
+  .thread {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .thread::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: linear-gradient(var(--gold-light), transparent 96%);
+    opacity: 0.5;
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 1.5s ease;
+  }
+
+  .thread.line-visible::before {
+    transform: scaleY(1);
+  }
+
+  .thread-node {
+    position: relative;
+    padding-bottom: 40px;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition:
+      opacity 0.75s cubic-bezier(.22, 1, .36, 1),
+      transform 0.75s cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .thread-node.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .thread-node:nth-child(1) {
+    transition-delay: 0.05s;
+  }
+
+  .thread-node:nth-child(2) {
+    transition-delay: 0.15s;
+  }
+
+  .thread-node:nth-child(3) {
+    transition-delay: 0.25s;
+  }
+
+  .thread-node:nth-child(4) {
+    transition-delay: 0.35s;
+  }
+
+  .thread-node:last-child {
+    padding-bottom: 0;
+  }
+
+  .thread-node::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 5px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--forest);
+    box-shadow: 0 0 0 1px var(--gold-light);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .thread-node:hover::before {
+    transform: scale(1.4);
+    box-shadow: 0 0 0 5px rgba(224,190,113,0.12);
+  }
+
+  .thread-node .t-field {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+  }
+
+  .thread-node .t-desc {
+    opacity: 0.82;
+    max-width: 58ch;
+    font-size: 0.95rem;
+  }
+
+  /* =========================================================
+     PROJECTS
+     ========================================================= */
+
+  .project-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 28px;
+    padding: 30px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition:
+      padding-left 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  .project:first-child {
+    padding-top: 0;
+  }
+
+  .project::before {
+    content: '';
+    position: absolute;
+    left: -18px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.35s ease;
+  }
+
+  .project:hover {
+    padding-left: 12px;
+  }
+
+  .project:hover::before {
+    transform: scaleY(1);
+  }
+
+  .project-meta {
+    font-size: 0.8rem;
+    color: var(--rust);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .project-meta .p-org {
+    display: block;
+    opacity: 0.65;
+    color: var(--ink);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  h3.project-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.28rem;
+    color: var(--forest);
+    margin-bottom: 8px;
+    transition: color 0.25s ease;
+  }
+
+  .project:hover .project-title {
+    color: var(--rust);
+  }
+
+  .project-desc {
+    opacity: 0.85;
+    font-size: 0.95rem;
+    max-width: 62ch;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .tag {
+    font-size: 0.74rem;
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    color: var(--forest);
+    opacity: 0.8;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .tag:hover {
+    background: var(--forest);
+    color: var(--cream);
+    border-color: var(--forest);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 720px) {
+    .project {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .project:hover {
+      padding-left: 6px;
+    }
+
+    .project::before {
+      left: -8px;
+    }
+  }
+
+  /* =========================================================
+     PUBLICATIONS
+     ========================================================= */
+
+  .pub-group {
+    margin-bottom: 34px;
+  }
+
+  .pub-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .pub-group h4 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--rust);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .pub-item {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.93rem;
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 20px;
+    transition: padding-left 0.3s ease;
+  }
+
+  .pub-item:last-child {
+    border-bottom: none;
+  }
+
+  .pub-item:hover {
+    padding-left: 10px;
+  }
+
+  .pub-date {
+    color: var(--rust);
+    font-weight: 500;
+    opacity: 0.9;
+  }
+
+  .pub-text {
+    opacity: 0.88;
+  }
+
+  .pub-venue {
+    font-style: italic;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 600px) {
+    .pub-item {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+
+  /* =========================================================
+     MEDIA
+     ========================================================= */
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+  }
+
+  .video-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--forest-deep);
+    border-radius: 4px;
+    overflow: hidden;
+    transition:
+      transform 0.4s ease,
+      box-shadow 0.4s ease;
+  }
+
+  .video-frame:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 25px 50px -25px rgba(20,39,32,0.55);
+  }
+
+  .video-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  .video-caption {
+    margin-top: 12px;
+    font-size: 0.84rem;
+    opacity: 0.65;
+  }
+
+  .press-list {
+    list-style: none;
+  }
+
+  .press-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    transition:
+      padding-left 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .press-item:first-child {
+    padding-top: 0;
+  }
+
+  .press-item:hover {
+    padding-left: 8px;
+    transform: translateX(4px);
+  }
+
+  .press-item a {
+    text-decoration: none;
+    color: var(--forest);
+    font-weight: 500;
+    font-size: 0.98rem;
+  }
+
+  .press-item a:hover {
+    color: var(--rust);
+  }
+
+  .press-item .press-source {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--rust);
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 720px) {
+    .media-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* =========================================================
+     INTERESTS
+     ========================================================= */
+
+  .interest-col {
+    margin-bottom: 44px;
+  }
+
+  .interest-col:last-child {
+    margin-bottom: 0;
+  }
+
+  .interest-col h4 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--rust);
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  .interest-list {
+    list-style: none;
+  }
+
+  .interest-item {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    transition: padding-left 0.3s ease;
+  }
+
+  .interest-item:last-child {
+    border-bottom: none;
+  }
+
+  .interest-item:hover {
+    padding-left: 10px;
+  }
+
+  .interest-name {
+    font-weight: 500;
+    color: var(--forest);
+    font-size: 0.95rem;
+    transition: color 0.25s ease;
+  }
+
+  .interest-item:hover .interest-name {
+    color: var(--rust);
+  }
+
+  .interest-note {
+    opacity: 0.65;
+    font-size: 0.86rem;
+    text-align: right;
+    max-width: 55%;
+  }
+
+  .fun-text {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    line-height: 1.55;
+    color: var(--forest);
+    max-width: 62ch;
+    opacity: 0.92;
+  }
+
+  .books-arrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 26px 0 22px;
+    color: var(--rust);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  .books-arrow svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .books-arrow:hover svg {
+    transform: translateX(6px);
+  }
+
+  .books-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 148px));
+    gap: 20px;
+  }
+
+  .book-card {
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 0.45s cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .book-card:hover {
+    transform: translateY(-10px);
+  }
+
+  .book-cover {
+    aspect-ratio: 2 / 3;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 14px 30px -16px rgba(31, 58, 46, 0.4);
+    position: relative;
+    transition: box-shadow 0.4s ease;
+  }
+
+  .book-card:hover .book-cover {
+    box-shadow: 0 25px 45px -18px rgba(31, 58, 46, 0.55);
+  }
+
+  .book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .book-card:hover .book-cover img {
+    transform: scale(1.04);
+  }
+
+  .book-meta {
+    margin-top: 10px;
+    font-size: 0.78rem;
+  }
+
+  .book-meta .b-author {
+    display: block;
+    color: var(--forest);
+    font-weight: 500;
+  }
+
+  .book-meta .b-note {
+    display: block;
+    opacity: 0.6;
+    margin-top: 2px;
+  }
+
+  @media (max-width: 640px) {
+    .books-row {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .interest-note {
+      text-align: left;
+      max-width: 100%;
+    }
+  }
+
+  /* =========================================================
+     VISION
+     ========================================================= */
+
+  .vision-card {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    padding: 40px 44px;
+    border-radius: 2px;
+    transition:
+      transform 0.45s cubic-bezier(.22, 1, .36, 1),
+      box-shadow 0.45s ease;
+  }
+
+  .vision-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 25px 50px -28px rgba(31,58,46,0.5);
+  }
+
+  .vision-card .v-label {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--forest);
+    margin-bottom: 16px;
+  }
+
+  .vision-card p {
+    opacity: 0.85;
+    max-width: 66ch;
+  }
+
+  .vision-card p + p {
+    margin-top: 16px;
+  }
+
+  /* =========================================================
+     CONTACT / FOOTER
+     ========================================================= */
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 56px 0 44px;
+  }
+
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-name {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    color: var(--forest);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 26px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    font-size: 0.88rem;
+    color: var(--rust);
+    border-bottom: 1px solid transparent;
+    transition:
+      border-color 0.2s ease,
+      transform 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .footer-links a:hover {
+    border-color: var(--rust);
+    transform: translateY(-2px);
+    color: var(--forest);
+  }
+
+  .footer-note {
+    margin-top: 40px;
+    font-size: 0.76rem;
+    opacity: 0.5;
+  }
 </style>
 </head>
 
 <body>
 
-<!-- PAGE LOADER -->
-<div class="page-loader">
-  <div class="loader-name">Basbo Ayelazono.</div>
-</div>
-
-<!-- CURSOR -->
-<div class="cursor-dot"></div>
-<div class="cursor-ring"></div>
-
-<!-- SCROLL PROGRESS -->
-<div class="scroll-progress">
-  <div class="scroll-progress-bar"></div>
-</div>
-
-<!-- =========================================================
-     NAV
-========================================================= -->
-
 <nav id="mainNav">
   <div class="wrap">
-
-    <a href="#top" class="nav-name">
-      Basbo Ayelazono
-    </a>
+    <a href="#top" class="nav-name">Basbo Ayelazono</a>
 
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
@@ -1634,48 +1306,31 @@ footer {
     >
       <span></span>
     </button>
-
   </div>
 </nav>
 
-
-<!-- =========================================================
-     HERO
-========================================================= -->
-
 <header class="hero" id="top">
-
   <div class="wrap">
 
-    <div class="hero-copy">
-
-      <h1 class="display">
-        <span class="hero-word">Hi, I'm</span>
-        <span class="hero-word">Basbo.</span>
-      </h1>
+    <div>
+      <h1 class="display">Hi, I'm Basbo.</h1>
 
       <p class="hero-tagline">
-        I'm passionate about building the connective tissue between
-        biology, computing, and the people they serve.
+        I'm passionate about building the connective tissue between biology, computing, and the people they serve.
       </p>
 
       <p class="hero-sub">
-        Currently a senior at Dakota State University. Right now I'm doing
-        research at Yale School of Medicine, Madison Cyber Labs, and Corteva
-        Agriscience. My free time (when I get some) goes to binge-watching
-        The Big Bang Theory, learning how to swim, and playing tennis
-        &mdash; enthusiastically, if not always well.
+        Currently a senior at Dakota State University. Right now I'm doing research at Yale School of Medicine, Madison Cyber Labs, and Corteva Agriscience. My free time (when I get some) goes to binge-watching The Big Bang Theory, learning how to swim, and playing tennis &mdash; enthusiastically, if not always well.
       </p>
 
       <div class="hero-actions">
-
         <a
           class="btn btn-primary"
           href="Basbo_Ayelazono_CV%20(1).pdf"
           target="_blank"
           rel="noopener"
         >
-          <span>View CV</span>
+          View CV
         </a>
 
         <a
@@ -1683,103 +1338,49 @@ footer {
           href="Basbo_Ayelazono_CV%20(1).pdf"
           download
         >
-          <span>Download CV</span>
+          Download CV
         </a>
-
       </div>
 
       <p class="hero-signature">
-        I'm currently seeking PhD positions in computational design,
-        accessibility, and computational biology.
+        I'm currently seeking PhD positions in computational design, accessibility, and computational biology.
       </p>
-
     </div>
 
-
-    <div class="portrait-wrap">
-
-      <div class="portrait">
-
-        <img
-          src="basbo-photo.jpeg"
-          alt="Portrait of Basbo Ayelazono"
-          id="portraitImg"
-        >
-
-        <div class="portrait-note">
-          Basbo Ayelazono &middot; Computer Science + Biology
-        </div>
-
-      </div>
-
+    <div class="portrait">
+      <img
+        src="basbo-photo.jpeg"
+        alt="Portrait of Basbo Ayelazono"
+        id="portraitImg"
+      >
     </div>
 
   </div>
-
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="hero-scroll-line"></div>
-  </div>
-
 </header>
 
-
-<!-- =========================================================
-     ABOUT
-========================================================= -->
-
 <section id="about">
-
   <div class="wrap">
 
     <div class="section-head reveal">
-
       <div>
-
-        <div class="section-kicker">
-          About
-        </div>
-
-        <h2 class="section-title">
-          <span class="section-title-inner">
-            A bit about my work
-          </span>
-        </h2>
-
+        <div class="section-kicker">About</div>
+        <h2 class="section-title">A bit about my work</h2>
       </div>
-
     </div>
-
 
     <div class="about-grid">
 
-      <div class="about-copy reveal">
-
+      <div class="reveal reveal-delay-1">
         <p>
-          My work sits at the intersection of three fields that don't often
-          share a room: computer science, biology, and human-centered design.
-          I've spent the last several years moving between them on purpose
-          &mdash; studying gene expression in lung tissue models, prototyping
-          assistive hardware for people with sensory disabilities, and building
-          the software that research teams actually use day to day.
+          My work sits at the intersection of three fields that don't often share a room: computer science, biology, and human-centered design. I've spent the last several years moving between them on purpose &mdash; studying gene expression in lung tissue models, prototyping assistive hardware for people with sensory disabilities, and building the software that research teams actually use day to day.
         </p>
 
         <p>
-          The hardest problems in health and accessibility tend to need people
-          who can read a differential expression plot, write production Python,
-          and sit with a user long enough to understand what they actually need.
-          I try to be that kind of researcher. I'm currently a rising senior
-          at Dakota State University, majoring in Computer Science with minors
-          in Bioinformatics and Integrated Biology, and actively applying to
-          PhD programs in HCI/assistive technology and computational biology
-          for Fall 2027.
+          The hardest problems in health and accessibility tend to need people who can read a differential expression plot, write production Python, and sit with a user long enough to understand what they actually need. I try to be that kind of researcher. I'm currently a rising senior at Dakota State University, majoring in Computer Science with minors in Bioinformatics and Integrated Biology, and actively applying to PhD programs in HCI/assistive technology and computational biology for Fall 2027.
         </p>
-
       </div>
 
-
-      <ul class="fact-list reveal">
-
+      <ul class="fact-list reveal reveal-delay-2">
         <li>
           <span class="fact-label">Institution</span>
           <span class="fact-value">Dakota State University</span>
@@ -1819,162 +1420,82 @@ footer {
           <span class="fact-label">Seeking</span>
           <span class="fact-value">PhD positions, Fall 2027</span>
         </li>
-
       </ul>
 
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =========================================================
-     THREAD
-========================================================= -->
-
 <section class="thread-section" id="thread">
-
   <div class="wrap">
 
-    <div class="section-kicker reveal">
-      The Path
-    </div>
+    <div class="section-kicker reveal">The Path</div>
 
     <h2 class="section-title reveal">
-      <span class="section-title-inner">
-        One thread, three fields
-      </span>
+      One thread, three fields
     </h2>
 
     <p class="lede reveal">
-      Each stage of my research has fed the next. Ecology taught me to work
-      with messy, real-world data. Biomedical research taught me rigor at the
-      bench. Accessibility work taught me to design with, not just for, the
-      people affected. Software engineering is how I make all of it usable
-      at scale.
+      Each stage of my research has fed the next. Ecology taught me to work with messy, real-world data. Biomedical research taught me rigor at the bench. Accessibility work taught me to design with, not just for, the people affected. Software engineering is how I make all of it usable at scale.
     </p>
-
 
     <div class="thread">
 
-      <div class="thread-progress"></div>
-
-
       <div class="thread-node">
-
-        <div class="t-field">
-          Ecology &amp; Field Research
-        </div>
-
+        <div class="t-field">Ecology &amp; Field Research</div>
         <div class="t-desc">
-          Field surveys of Great Blue Heron rookeries and prairie lake
-          microplastics contamination, presented at IALE-NA and NCUR.
-          Learned to extract signal from noisy, real-world environmental data.
+          Field surveys of Great Blue Heron rookeries and prairie lake microplastics contamination, presented at IALE-NA and NCUR. Learned to extract signal from noisy, real-world environmental data.
         </div>
-
       </div>
 
-
       <div class="thread-node">
-
-        <div class="t-field">
-          Computational Biology
-        </div>
-
+        <div class="t-field">Computational Biology</div>
         <div class="t-desc">
-          scRNA-seq analysis at Yale School of Medicine, characterizing gene
-          expression in tissue-engineered lung bioreactor models under
-          Dr. Ruslan Medzhitov and Dr. Allison Greaney.
+          scRNA-seq analysis at Yale School of Medicine, characterizing gene expression in tissue-engineered lung bioreactor models under Dr. Ruslan Medzhitov and Dr. Allison Greaney.
         </div>
-
       </div>
 
-
       <div class="thread-node">
-
-        <div class="t-field">
-          Assistive Technology &amp; HCI
-        </div>
-
+        <div class="t-field">Assistive Technology &amp; HCI</div>
         <div class="t-desc">
-          Multisensory environment design, wearable device prototyping,
-          and AI accessibility tool evaluation at Madison Cyber Labs,
-          grounded in direct work with target user populations.
+          Multisensory environment design, wearable device prototyping, and AI accessibility tool evaluation at Madison Cyber Labs, grounded in direct work with target user populations.
         </div>
-
       </div>
 
-
       <div class="thread-node">
-
-        <div class="t-field">
-          Applied Software Engineering
-        </div>
-
+        <div class="t-field">Applied Software Engineering</div>
         <div class="t-desc">
-          Building the internal tools &mdash; genomics workflow automation,
-          logistics tracking, caregiver communication systems &mdash; that
-          turn research infrastructure into something people can actually use.
+          Building the internal tools &mdash; genomics workflow automation, logistics tracking, caregiver communication systems &mdash; that turn research infrastructure into something people can actually use.
         </div>
-
       </div>
 
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =========================================================
-     PROJECTS
-========================================================= -->
-
 <section id="projects">
-
   <div class="wrap">
 
     <div class="section-head reveal">
-
       <div>
-
-        <div class="section-kicker">
-          Selected Work
-        </div>
-
-        <h2 class="section-title">
-          <span class="section-title-inner">
-            Projects
-          </span>
-        </h2>
-
+        <div class="section-kicker">Selected Work</div>
+        <h2 class="section-title">Projects</h2>
       </div>
-
     </div>
-
 
     <div class="project-list">
 
-
       <div class="project reveal">
-
         <div class="project-meta">
           2026
           <span class="p-org">Corteva Agriscience</span>
         </div>
 
         <div>
-
-          <h3 class="project-title">
-            OMNI Probe Panel Management App
-          </h3>
+          <h3 class="project-title">OMNI Probe Panel Management App</h3>
 
           <p class="project-desc">
-            A Python and Streamlit application that replaces manual genomic
-            probe panel tracking with an internal workflow tool, integrating
-            with genomic databases to streamline coordination between R&amp;D
-            and bioinformatics teams.
+            A Python and Streamlit application that replaces manual genomic probe panel tracking with an internal workflow tool, integrating with genomic databases to streamline coordination between R&amp;D and bioinformatics teams.
           </p>
 
           <div class="tags">
@@ -1983,59 +1504,40 @@ footer {
             <span class="tag">Azure</span>
             <span class="tag">REST APIs</span>
           </div>
-
         </div>
-
       </div>
 
-
       <div class="project reveal">
-
         <div class="project-meta">
           2026
           <span class="p-org">Corteva Agriscience</span>
         </div>
 
         <div>
-
-          <h3 class="project-title">
-            Shipping &amp; Logistics Automation
-          </h3>
+          <h3 class="project-title">Shipping &amp; Logistics Automation</h3>
 
           <p class="project-desc">
-            An internal tool automating shipping and logistics operations for
-            the Genome Center of Excellence, replacing manual tracking with
-            real-time status monitoring.
+            An internal tool automating shipping and logistics operations for the Genome Center of Excellence, replacing manual tracking with real-time status monitoring.
           </p>
 
           <div class="tags">
             <span class="tag">Python</span>
             <span class="tag">Automation</span>
           </div>
-
         </div>
-
       </div>
 
-
       <div class="project reveal">
-
         <div class="project-meta">
           2025 &ndash; Present
           <span class="p-org">Yale School of Medicine</span>
         </div>
 
         <div>
-
-          <h3 class="project-title">
-            scRNA-seq Analysis Pipeline
-          </h3>
+          <h3 class="project-title">scRNA-seq Analysis Pipeline</h3>
 
           <p class="project-desc">
-            End-to-end single-cell RNA sequencing pipeline &mdash; quality
-            control, normalization, dimensionality reduction, clustering,
-            and differential expression &mdash; characterizing transcriptional
-            differences across lung bioreactor conditions.
+            End-to-end single-cell RNA sequencing pipeline &mdash; quality control, normalization, dimensionality reduction, clustering, and differential expression &mdash; characterizing transcriptional differences across lung bioreactor conditions.
           </p>
 
           <div class="tags">
@@ -2043,30 +1545,20 @@ footer {
             <span class="tag">Seurat</span>
             <span class="tag">ggplot2</span>
           </div>
-
         </div>
-
       </div>
 
-
       <div class="project reveal">
-
         <div class="project-meta">
           2025
           <span class="p-org">Madison Cyber Labs</span>
         </div>
 
         <div>
-
-          <h3 class="project-title">
-            CareLog &mdash; NFC Visitor &amp; Activity Logging
-          </h3>
+          <h3 class="project-title">CareLog &mdash; NFC Visitor &amp; Activity Logging</h3>
 
           <p class="project-desc">
-            An NFC-based application improving communication between
-            caregivers and patients at an elderly care facility, deployed
-            on a Firebase Firestore backend and designed to reduce
-            documentation burden.
+            An NFC-based application improving communication between caregivers and patients at an elderly care facility, deployed on a Firebase Firestore backend and designed to reduce documentation burden.
           </p>
 
           <div class="tags">
@@ -2074,30 +1566,20 @@ footer {
             <span class="tag">NFC</span>
             <span class="tag">Netlify</span>
           </div>
-
         </div>
-
       </div>
 
-
       <div class="project reveal">
-
         <div class="project-meta">
           2025
           <span class="p-org">Madison Cyber Labs</span>
         </div>
 
         <div>
-
-          <h3 class="project-title">
-            Snoezelen Multisensory Environment
-          </h3>
+          <h3 class="project-title">Snoezelen Multisensory Environment</h3>
 
           <p class="project-desc">
-            A designed multisensory space for users with cognitive and sensory
-            disabilities, integrating programmable lighting, audio, and tactile
-            stimuli with embedded hardware, using accessibility standards and
-            human-centered design frameworks.
+            A designed multisensory space for users with cognitive and sensory disabilities, integrating programmable lighting, audio, and tactile stimuli with embedded hardware, using accessibility standards and human-centered design frameworks.
           </p>
 
           <div class="tags">
@@ -2105,30 +1587,20 @@ footer {
             <span class="tag">Embedded Systems</span>
             <span class="tag">Accessibility</span>
           </div>
-
         </div>
-
       </div>
 
-
       <div class="project reveal">
-
         <div class="project-meta">
           2025
           <span class="p-org">Madison Cyber Labs</span>
         </div>
 
         <div>
-
-          <h3 class="project-title">
-            Assistive Hearing &amp; Audio Signal Processing
-          </h3>
+          <h3 class="project-title">Assistive Hearing &amp; Audio Signal Processing</h3>
 
           <p class="project-desc">
-            Quantitative audio signal analysis evaluating amplification,
-            latency, and noise reduction across consumer earbud and hearing
-            aid platforms, with comparative benchmarking of accessibility
-            features to inform assistive audio device design.
+            Quantitative audio signal analysis evaluating amplification, latency, and noise reduction across consumer earbud and hearing aid platforms, with comparative benchmarking of accessibility features to inform assistive audio device design.
           </p>
 
           <div class="tags">
@@ -2136,30 +1608,20 @@ footer {
             <span class="tag">MATLAB</span>
             <span class="tag">Signal Processing</span>
           </div>
-
         </div>
-
       </div>
 
-
       <div class="project reveal">
-
         <div class="project-meta">
           2025
           <span class="p-org">Madison Cyber Labs</span>
         </div>
 
         <div>
-
-          <h3 class="project-title">
-            Assistive Biomedical Device Prototyping
-          </h3>
+          <h3 class="project-title">Assistive Biomedical Device Prototyping</h3>
 
           <p class="project-desc">
-            Wearable assistive device prototypes developed through iterative
-            fabrication cycles on Prusa and LulzBot TAZ 3D printers,
-            evaluating form, fit, and usability directly with target user
-            populations using low-cost, accessible makerspace workflows.
+            Wearable assistive device prototypes developed through iterative fabrication cycles on Prusa and LulzBot TAZ 3D printers, evaluating form, fit, and usability directly with target user populations using low-cost, accessible makerspace workflows.
           </p>
 
           <div class="tags">
@@ -2167,30 +1629,20 @@ footer {
             <span class="tag">3D Printing</span>
             <span class="tag">Rapid Prototyping</span>
           </div>
-
         </div>
-
       </div>
 
-
       <div class="project reveal">
-
         <div class="project-meta">
           2025
           <span class="p-org">Madison Cyber Labs</span>
         </div>
 
         <div>
-
-          <h3 class="project-title">
-            AI-Based Accessibility Tools Evaluation
-          </h3>
+          <h3 class="project-title">AI-Based Accessibility Tools Evaluation</h3>
 
           <p class="project-desc">
-            Systematic evaluation of AI voice recording tools using speech
-            enhancement and noise suppression algorithms, benchmarking
-            transcription accuracy and usability through Python-based
-            analysis workflows.
+            Systematic evaluation of AI voice recording tools using speech enhancement and noise suppression algorithms, benchmarking transcription accuracy and usability through Python-based analysis workflows.
           </p>
 
           <div class="tags">
@@ -2198,30 +1650,20 @@ footer {
             <span class="tag">Speech Processing</span>
             <span class="tag">AI Evaluation</span>
           </div>
-
         </div>
-
       </div>
 
-
       <div class="project reveal">
-
         <div class="project-meta">
           2025
           <span class="p-org">University of Utah, NIH SURF</span>
         </div>
 
         <div>
-
-          <h3 class="project-title">
-            Oil Spill &amp; Microplastics Interaction Analysis
-          </h3>
+          <h3 class="project-title">Oil Spill &amp; Microplastics Interaction Analysis</h3>
 
           <p class="project-desc">
-            A high-throughput experimental workflow and automated image
-            analysis pipeline quantifying particle-surface interactions
-            between microplastics and oils, as one of 25 scholars selected
-            nationally for the NIH-funded SURF program.
+            A high-throughput experimental workflow and automated image analysis pipeline quantifying particle-surface interactions between microplastics and oils, as one of 25 scholars selected nationally for the NIH-funded SURF program.
           </p>
 
           <div class="tags">
@@ -2229,57 +1671,31 @@ footer {
             <span class="tag">ImageJ</span>
             <span class="tag">C++</span>
           </div>
-
         </div>
-
       </div>
 
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =========================================================
-     PUBLICATIONS
-========================================================= -->
-
 <section id="publications">
-
   <div class="wrap">
 
     <div class="section-head reveal">
-
       <div>
-
-        <div class="section-kicker">
-          Research Record
-        </div>
-
-        <h2 class="section-title">
-          <span class="section-title-inner">
-            Presentations &amp; publications
-          </span>
-        </h2>
-
+        <div class="section-kicker">Research Record</div>
+        <h2 class="section-title">Presentations &amp; publications</h2>
       </div>
-
     </div>
 
-
     <div class="pub-group reveal">
-
       <h4>Oral Presentations</h4>
 
       <div class="pub-item">
         <div class="pub-date">2026</div>
         <div class="pub-text">
-          Nest Success and Habitat Characteristics of a First-Year Great Blue
-          Heron Rookery.
-          <span class="pub-venue">
-            IALE-NA, Athens, GA.
-          </span>
+          Nest Success and Habitat Characteristics of a First-Year Great Blue Heron Rookery.
+          <span class="pub-venue">IALE-NA, Athens, GA.</span>
         </div>
       </div>
 
@@ -2287,26 +1703,19 @@ footer {
         <div class="pub-date">2025</div>
         <div class="pub-text">
           Survey of Prairie Lakes for Microplastics in Eastern South Dakota.
-          <span class="pub-venue">
-            DSU Research Seminar.
-          </span>
+          <span class="pub-venue">DSU Research Seminar.</span>
         </div>
       </div>
-
     </div>
 
-
     <div class="pub-group reveal">
-
       <h4>Poster Presentations</h4>
 
       <div class="pub-item">
         <div class="pub-date">2026</div>
         <div class="pub-text">
           Detection of Neonicotinoid in Eggshells of Wild Bird Species.
-          <span class="pub-venue">
-            South Dakota Academy of Science.
-          </span>
+          <span class="pub-venue">South Dakota Academy of Science.</span>
         </div>
       </div>
 
@@ -2314,9 +1723,7 @@ footer {
         <div class="pub-date">2025</div>
         <div class="pub-text">
           High Throughput Experimentation on Oil Spills and Microplastics.
-          <span class="pub-venue">
-            University of Utah Summer Conference.
-          </span>
+          <span class="pub-venue">University of Utah Summer Conference.</span>
         </div>
       </div>
 
@@ -2324,119 +1731,78 @@ footer {
         <div class="pub-date">2025</div>
         <div class="pub-text">
           Survey of Prairie Lakes for Microplastics in Eastern South Dakota.
-          <span class="pub-venue">
-            NCUR, Pittsburgh, PA.
-          </span>
+          <span class="pub-venue">NCUR, Pittsburgh, PA.</span>
         </div>
       </div>
-
     </div>
 
-
     <div class="pub-group reveal">
-
       <h4>Manuscript &amp; Published Abstract</h4>
 
       <div class="pub-item">
         <div class="pub-date">In prep</div>
         <div class="pub-text">
-          Detection of Neonicotinoid in Eggshells of Wild Bird Species across
-          South Dakota.
-          <span class="pub-venue">
-            Target journal TBD, with Dr. Kristel Bakker.
-          </span>
+          Detection of Neonicotinoid in Eggshells of Wild Bird Species across South Dakota.
+          <span class="pub-venue">Target journal TBD, with Dr. Kristel Bakker.</span>
         </div>
       </div>
 
       <div class="pub-item">
         <div class="pub-date">2025</div>
         <div class="pub-text">
-          High Throughput Experimentation and Data Analysis Revealing the
-          Intricate Interplay of Oil Spills and Microplastics.
-          <span class="pub-venue">
-            Range 26:12, with Dr. Samira Shiri.
-          </span>
+          High Throughput Experimentation and Data Analysis Revealing the Intricate Interplay of Oil Spills and Microplastics.
+          <span class="pub-venue">Range 26:12, with Dr. Samira Shiri.</span>
         </div>
       </div>
-
     </div>
 
   </div>
-
 </section>
 
-
-<!-- =========================================================
-     MEDIA
-========================================================= -->
-
 <section id="media">
-
   <div class="wrap">
 
     <div class="section-head reveal">
-
       <div>
-
-        <div class="section-kicker">
-          Media
-        </div>
-
-        <h2 class="section-title">
-          <span class="section-title-inner">
-            In conversation &amp; in print
-          </span>
-        </h2>
-
+        <div class="section-kicker">Media</div>
+        <h2 class="section-title">In conversation &amp; in print</h2>
       </div>
-
     </div>
-
 
     <div class="media-grid">
 
       <div class="reveal">
-
         <div class="video-frame">
-
           <iframe
             src="https://www.youtube.com/embed/upp7FtFf3Bs"
             title="DSU student studied microplastics in Utah over summer"
             id="videoEmbed"
             allowfullscreen
           ></iframe>
-
         </div>
 
         <p class="video-caption">
           DSU student studied microplastics in Utah over summer &mdash; 2:35
         </p>
-
       </div>
 
-
-      <ul class="press-list reveal">
+      <ul class="press-list reveal reveal-delay-1">
 
         <li class="press-item">
-
           <a
             href="https://dsu.edu/news/2026/07/valiant-living-2026.html"
             target="_blank"
             rel="noopener"
           >
-            DSU students create interactive light wall to support individuals
-            with developmental disabilities
+            DSU students create interactive light wall to support individuals with developmental disabilities
           </a>
 
           <span class="press-source">
             Dakota State University &middot; July 2026
           </span>
-
         </li>
 
-
         <li class="press-item">
-
           <a
             href="https://dsu.edu/news/2025/10/summer-internship-microplastics.html"
             target="_blank"
@@ -2448,12 +1814,9 @@ footer {
           <span class="press-source">
             Dakota State University &middot; October 2025
           </span>
-
         </li>
 
-
         <li class="press-item">
-
           <a
             href="https://dsu.edu/news/2025/05/microplastic-research.html"
             target="_blank"
@@ -2465,62 +1828,36 @@ footer {
           <span class="press-source">
             Dakota State University &middot; May 2025
           </span>
-
         </li>
 
-
         <li class="press-item">
-
           <a
             href="https://uen.pressbooks.pub/range26i2/chapter/ayelazono/"
             target="_blank"
             rel="noopener"
           >
-            High Throughput Experimentation and Data Analysis Revealing the
-            Intricate Interplay of Oil Spills and Microplastics
+            High Throughput Experimentation and Data Analysis Revealing the Intricate Interplay of Oil Spills and Microplastics
           </a>
 
           <span class="press-source">
             Range, 26:12 &middot; 2025
           </span>
-
         </li>
 
       </ul>
-
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =========================================================
-     INTERESTS
-========================================================= -->
-
 <section id="interests">
-
   <div class="wrap">
 
     <div class="section-head reveal">
-
       <div>
-
-        <div class="section-kicker">
-          Beyond the Lab
-        </div>
-
-        <h2 class="section-title">
-          <span class="section-title-inner">
-            Interests
-          </span>
-        </h2>
-
+        <div class="section-kicker">Beyond the Lab</div>
+        <h2 class="section-title">Interests</h2>
       </div>
-
     </div>
-
 
     <div class="interest-col reveal">
 
@@ -2529,63 +1866,37 @@ footer {
       <ul class="interest-list">
 
         <li class="interest-item">
-          <span class="interest-name">
-            Assistive technology &amp; HCI
-          </span>
-
-          <span class="interest-note">
-            co-design methods, wearable devices
-          </span>
+          <span class="interest-name">Assistive technology &amp; HCI</span>
+          <span class="interest-note">co-design methods, wearable devices</span>
         </li>
 
         <li class="interest-item">
-          <span class="interest-name">
-            Computational biology
-          </span>
-
-          <span class="interest-note">
-            single-cell transcriptomics, genomics
-          </span>
+          <span class="interest-name">Computational biology</span>
+          <span class="interest-note">single-cell transcriptomics, genomics</span>
         </li>
 
         <li class="interest-item">
-          <span class="interest-name">
-            AI accessibility tools
-          </span>
-
-          <span class="interest-note">
-            speech, transcription, usability
-          </span>
+          <span class="interest-name">AI accessibility tools</span>
+          <span class="interest-note">speech, transcription, usability</span>
         </li>
 
         <li class="interest-item">
-          <span class="interest-name">
-            Bioinformatics infrastructure
-          </span>
-
-          <span class="interest-note">
-            workflow automation, data pipelines
-          </span>
+          <span class="interest-name">Bioinformatics infrastructure</span>
+          <span class="interest-note">workflow automation, data pipelines</span>
         </li>
 
       </ul>
-
     </div>
-
 
     <div class="interest-col fun-col reveal">
 
       <h4>Fun Interests</h4>
 
       <p class="fun-text">
-        In my free time, you'd find me binge-watching The Big Bang Theory,
-        learning how to swim, playing tennis, or reading African literature
-        and Greek mythology retellings.
+        In my free time, you'd find me binge-watching The Big Bang Theory, learning how to swim, playing tennis, or reading African literature and Greek mythology retellings.
       </p>
 
-
       <div class="books-arrow">
-
         <svg
           width="26"
           height="14"
@@ -2601,133 +1912,79 @@ footer {
         </svg>
 
         A few favorites on the shelf
-
       </div>
-
 
       <div class="books-row">
 
         <div class="book-card">
-
           <div class="book-cover">
             <img
               src="purple-hibiscus.png"
               alt="Purple Hibiscus cover"
             >
           </div>
-
         </div>
 
-
         <div class="book-card">
-
           <div class="book-cover">
             <img
               src="till-we-have-faces.png"
               alt="Till We Have Faces cover"
             >
           </div>
-
         </div>
 
-
         <div class="book-card">
-
           <div class="book-cover">
             <img
               src="circe.png"
               alt="Circe cover"
             >
           </div>
-
         </div>
 
-
         <div class="book-card">
-
           <div class="book-cover">
             <img
               src="song-of-the-cell.png"
               alt="The Song of the Cell cover"
             >
           </div>
-
         </div>
 
       </div>
-
     </div>
 
   </div>
-
 </section>
 
-
-<!-- =========================================================
-     VISION
-========================================================= -->
-
 <section id="vision">
-
   <div class="wrap">
 
     <div class="section-head reveal">
-
       <div>
-
-        <div class="section-kicker">
-          Looking Ahead
-        </div>
-
-        <h2 class="section-title">
-          <span class="section-title-inner">
-            Where this is going
-          </span>
-        </h2>
-
+        <div class="section-kicker">Looking Ahead</div>
+        <h2 class="section-title">Where this is going</h2>
       </div>
-
     </div>
-
 
     <div class="vision-card reveal">
 
-      <div class="v-label">
-        We Make You
-      </div>
+      <div class="v-label">We Make You</div>
 
       <p>
-        The idea took shape while I was working on the Snoezelen environment
-        at Madison Cyber Labs &mdash; sitting with users who have cognitive
-        and sensory disabilities, watching which lighting or textures actually
-        helped and which ones I'd only assumed would. The same thing happened
-        during hearing aid benchmarking, when the features that mattered most
-        to users weren't the ones the spec sheets emphasized. I kept noticing
-        the gap between how assistive devices get designed and how they're
-        actually used.
+        The idea took shape while I was working on the Snoezelen environment at Madison Cyber Labs &mdash; sitting with users who have cognitive and sensory disabilities, watching which lighting or textures actually helped and which ones I'd only assumed would. The same thing happened during hearing aid benchmarking, when the features that mattered most to users weren't the ones the spec sheets emphasized. I kept noticing the gap between how assistive devices get designed and how they're actually used.
       </p>
 
       <p>
-        We Make You is my answer to that gap: a future venture built around
-        co-designing devices with the people who'll use them, from the first
-        sketch, not the final usability test. Pursuing a PhD in HCI and
-        assistive technology is the deliberate next step toward eventually
-        making this a reality.
+        We Make You is my answer to that gap: a future venture built around co-designing devices with the people who'll use them, from the first sketch, not the final usability test. Pursuing a PhD in HCI and assistive technology is the deliberate next step toward eventually making this a reality.
       </p>
 
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =========================================================
-     FOOTER
-========================================================= -->
-
 <footer id="contact">
-
   <div class="wrap">
 
     <div class="footer-grid">
@@ -2764,466 +2021,217 @@ footer {
         </li>
 
       </ul>
-
     </div>
-
 
     <div class="footer-note">
       Basbo Ayelazono &middot; Madison, SD &amp; Des Moines, IA
     </div>
 
   </div>
-
 </footer>
 
-
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
-
 <script>
+  /* =========================================================
+     MOBILE NAVIGATION
+     ========================================================= */
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  const mainNav = document.getElementById('mainNav');
 
-const navToggle = document.getElementById('navToggle');
-const navLinks = document.getElementById('navLinks');
-const mainNav = document.getElementById('mainNav');
-
-navToggle.addEventListener('click', () => {
-
-  const isOpen = navLinks.classList.toggle('open');
-
-  navToggle.classList.toggle('active', isOpen);
-
-  navToggle.setAttribute(
-    'aria-expanded',
-    isOpen
-  );
-
-});
-
-navLinks.querySelectorAll('a').forEach(link => {
-
-  link.addEventListener('click', () => {
-
-    navLinks.classList.remove('open');
-    navToggle.classList.remove('active');
-
-    navToggle.setAttribute(
-      'aria-expanded',
-      'false'
-    );
-
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
   });
 
-});
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
 
 
-/* =========================================================
-   NAV SCROLL EFFECT
-========================================================= */
+  /* =========================================================
+     NAV SHADOW ON SCROLL
+     ========================================================= */
 
-function updateNav() {
-
-  if (window.scrollY > 30) {
-    mainNav.classList.add('scrolled');
-  } else {
-    mainNav.classList.remove('scrolled');
-  }
-
-}
-
-window.addEventListener(
-  'scroll',
-  updateNav,
-  { passive: true }
-);
-
-updateNav();
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      mainNav.classList.add('scrolled');
+    } else {
+      mainNav.classList.remove('scrolled');
+    }
+  }, { passive: true });
 
 
-/* =========================================================
-   SCROLL PROGRESS
-========================================================= */
+  /* =========================================================
+     SCROLL REVEALS
+     ========================================================= */
 
-const progressBar =
-  document.querySelector('.scroll-progress-bar');
+  const revealElements = document.querySelectorAll('.reveal');
 
-function updateProgress() {
-
-  const scrollTop = window.scrollY;
-
-  const documentHeight =
-    document.documentElement.scrollHeight -
-    window.innerHeight;
-
-  const progress =
-    documentHeight > 0
-      ? scrollTop / documentHeight
-      : 0;
-
-  progressBar.style.transform =
-    `scaleY(${progress})`;
-
-}
-
-window.addEventListener(
-  'scroll',
-  updateProgress,
-  { passive: true }
-);
-
-updateProgress();
-
-
-/* =========================================================
-   GENERAL REVEALS
-========================================================= */
-
-const revealElements =
-  document.querySelectorAll('.reveal');
-
-const revealObserver =
-  new IntersectionObserver(
+  const revealObserver = new IntersectionObserver(
     entries => {
-
       entries.forEach(entry => {
-
         if (entry.isIntersecting) {
-
           entry.target.classList.add('visible');
-
-          revealObserver.unobserve(
-            entry.target
-          );
-
+          revealObserver.unobserve(entry.target);
         }
-
       });
-
     },
     {
       threshold: 0.12,
-      rootMargin: '0px 0px -60px 0px'
+      rootMargin: '0px 0px -45px 0px'
     }
   );
 
-revealElements.forEach(element => {
-  revealObserver.observe(element);
-});
-
-
-/* =========================================================
-   THREAD NODE REVEALS
-========================================================= */
-
-const threadNodes =
-  document.querySelectorAll('.thread-node');
-
-const threadObserver =
-  new IntersectionObserver(
-    entries => {
-
-      entries.forEach(entry => {
-
-        if (entry.isIntersecting) {
-
-          entry.target.classList.add('visible');
-
-          threadObserver.unobserve(
-            entry.target
-          );
-
-        }
-
-      });
-
-    },
-    {
-      threshold: 0.25
-    }
-  );
-
-threadNodes.forEach(node => {
-  threadObserver.observe(node);
-});
-
-
-/* =========================================================
-   THREAD SCROLL PROGRESS
-========================================================= */
-
-const thread =
-  document.querySelector('.thread');
-
-const threadProgress =
-  document.querySelector('.thread-progress');
-
-function updateThread() {
-
-  if (!thread || !threadProgress) return;
-
-  const rect =
-    thread.getBoundingClientRect();
-
-  const viewportCenter =
-    window.innerHeight * 0.55;
-
-  const totalHeight =
-    thread.offsetHeight;
-
-  let progress =
-    (viewportCenter - rect.top) / totalHeight;
-
-  progress =
-    Math.max(
-      0,
-      Math.min(1, progress)
-    );
-
-  threadProgress.style.height =
-    `${progress * 100}%`;
-
-}
-
-window.addEventListener(
-  'scroll',
-  updateThread,
-  { passive: true }
-);
-
-window.addEventListener(
-  'resize',
-  updateThread
-);
-
-updateThread();
-
-
-/* =========================================================
-   PORTRAIT PARALLAX
-========================================================= */
-
-const portrait =
-  document.querySelector('.portrait');
-
-const portraitWrap =
-  document.querySelector('.portrait-wrap');
-
-function portraitParallax() {
-
-  if (!portrait || !portraitWrap) return;
-
-  if (window.innerWidth <= 720) {
-    portrait.style.transform = '';
-    return;
-  }
-
-  const rect =
-    portraitWrap.getBoundingClientRect();
-
-  const center =
-    rect.top + rect.height / 2;
-
-  const distance =
-    (window.innerHeight / 2 - center) * 0.035;
-
-  portrait.style.translate =
-    `0 ${distance}px`;
-
-}
-
-window.addEventListener(
-  'scroll',
-  portraitParallax,
-  { passive: true }
-);
-
-window.addEventListener(
-  'resize',
-  portraitParallax
-);
-
-portraitParallax();
-
-
-/* =========================================================
-   CURSOR
-========================================================= */
-
-const cursorDot =
-  document.querySelector('.cursor-dot');
-
-const cursorRing =
-  document.querySelector('.cursor-ring');
-
-let mouseX = 0;
-let mouseY = 0;
-
-let ringX = 0;
-let ringY = 0;
-
-document.addEventListener(
-  'mousemove',
-  event => {
-
-    mouseX = event.clientX;
-    mouseY = event.clientY;
-
-    cursorDot.style.left =
-      `${mouseX}px`;
-
-    cursorDot.style.top =
-      `${mouseY}px`;
-
-    cursorDot.style.opacity = '1';
-    cursorRing.style.opacity = '1';
-
-  }
-);
-
-function animateCursor() {
-
-  ringX +=
-    (mouseX - ringX) * 0.13;
-
-  ringY +=
-    (mouseY - ringY) * 0.13;
-
-  cursorRing.style.left =
-    `${ringX}px`;
-
-  cursorRing.style.top =
-    `${ringY}px`;
-
-  requestAnimationFrame(
-    animateCursor
-  );
-
-}
-
-animateCursor();
-
-
-/* =========================================================
-   INTERACTIVE CURSOR STATES
-========================================================= */
-
-const interactiveElements =
-  document.querySelectorAll(
-    'a, button, .project, .book-card, .tag'
-  );
-
-interactiveElements.forEach(element => {
-
-  element.addEventListener(
-    'mouseenter',
-    () => {
-      document.body.classList.add(
-        'cursor-active'
-      );
-    }
-  );
-
-  element.addEventListener(
-    'mouseleave',
-    () => {
-      document.body.classList.remove(
-        'cursor-active'
-      );
-    }
-  );
-
-});
-
-
-/* =========================================================
-   MAGNETIC BUTTON EFFECT
-========================================================= */
-
-const buttons =
-  document.querySelectorAll('.btn');
-
-buttons.forEach(button => {
-
-  button.addEventListener(
-    'mousemove',
-    event => {
-
-      const rect =
-        button.getBoundingClientRect();
-
-      const x =
-        event.clientX -
-        rect.left -
-        rect.width / 2;
-
-      const y =
-        event.clientY -
-        rect.top -
-        rect.height / 2;
-
-      button.style.transform =
-        `translate(${x * 0.08}px, ${y * 0.08}px)`;
-
-    }
-  );
-
-  button.addEventListener(
-    'mouseleave',
-    () => {
-
-      button.style.transform =
-        '';
-
-    }
-  );
-
-});
-
-
-/* =========================================================
-   SMOOTH ANCHOR OFFSET
-========================================================= */
-
-document
-  .querySelectorAll('a[href^="#"]')
-  .forEach(anchor => {
-
-    anchor.addEventListener(
-      'click',
-      function(event) {
-
-        const target =
-          document.querySelector(
-            this.getAttribute('href')
-          );
-
-        if (!target) return;
-
-        event.preventDefault();
-
-        const navHeight =
-          mainNav.offsetHeight;
-
-        const targetPosition =
-          target.getBoundingClientRect().top +
-          window.scrollY -
-          navHeight -
-          15;
-
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
-
-      }
-    );
-
+  revealElements.forEach(element => {
+    revealObserver.observe(element);
   });
 
+
+  /* =========================================================
+     THREAD ANIMATION
+     ========================================================= */
+
+  const thread = document.querySelector('.thread');
+  const threadNodes = document.querySelectorAll('.thread-node');
+
+  const threadObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          thread.classList.add('line-visible');
+
+          threadNodes.forEach((node, index) => {
+            setTimeout(() => {
+              node.classList.add('visible');
+            }, index * 120);
+          });
+
+          threadObserver.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.15
+    }
+  );
+
+  if (thread) {
+    threadObserver.observe(thread);
+  }
+
+
+  /* =========================================================
+     ACTIVE NAVIGATION
+     ========================================================= */
+
+  const sections = document.querySelectorAll(
+    'header[id], section[id], footer[id]'
+  );
+
+  const navItems = document.querySelectorAll('.nav-links a');
+
+  const activeObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+
+          navItems.forEach(link => {
+            link.classList.remove('active');
+
+            if (
+              link.getAttribute('href') === '#' + entry.target.id
+            ) {
+              link.classList.add('active');
+            }
+          });
+
+        }
+      });
+    },
+    {
+      rootMargin: '-35% 0px -55% 0px',
+      threshold: 0
+    }
+  );
+
+  sections.forEach(section => {
+    activeObserver.observe(section);
+  });
+
+
+  /* =========================================================
+     SUBTLE HERO PARALLAX
+     ========================================================= */
+
+  const portrait = document.getElementById('portraitImg');
+  const portraitContainer = document.querySelector('.portrait');
+
+  if (
+    portrait &&
+    portraitContainer &&
+    window.matchMedia('(prefers-reduced-motion: no-preference)').matches
+  ) {
+
+    window.addEventListener('scroll', () => {
+
+      const rect = portraitContainer.getBoundingClientRect();
+
+      if (
+        rect.bottom > 0 &&
+        rect.top < window.innerHeight
+      ) {
+
+        const distance =
+          (window.innerHeight / 2) -
+          (rect.top + rect.height / 2);
+
+        const movement = distance * 0.025;
+
+        portrait.style.transform =
+          `translateY(${movement}px)`;
+      }
+
+    }, { passive: true });
+  }
+
+
+  /* =========================================================
+     SMOOTH SCROLL WITH NAV OFFSET
+     ========================================================= */
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+    anchor.addEventListener('click', function(event) {
+
+      const targetId = this.getAttribute('href');
+
+      if (targetId === '#') return;
+
+      const target = document.querySelector(targetId);
+
+      if (!target) return;
+
+      event.preventDefault();
+
+      const navHeight = mainNav.offsetHeight;
+
+      const targetPosition =
+        target.getBoundingClientRect().top +
+        window.pageYOffset -
+        navHeight;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+
+    });
+
+  });
 </script>
 
 </body>
