@@ -182,14 +182,36 @@
 
   /* ---------- HERO ---------- */
   header.hero {
-    padding: 100px 0 88px;
     position: relative;
-  }
-  .hero .wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 56px;
+    min-height: 100vh;
+    display: flex;
     align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    opacity: 0.16;
+    filter: grayscale(15%);
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--cream) 0%, rgba(247,243,233,0.3) 35%, var(--cream) 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    width: 100%;
   }
   .eyebrow {
     font-size: 0.78rem;
@@ -202,28 +224,28 @@
   h1.display {
     font-family: var(--serif);
     font-weight: 400;
-    font-size: clamp(3.2rem, 7vw, 5.2rem);
-    line-height: 1.05;
+    font-size: clamp(3.6rem, 11vw, 8.5rem);
+    line-height: 0.98;
     color: var(--forest);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
   h1.display em {
     font-style: italic;
     font-weight: 400;
   }
   .hero-tagline {
-    margin-top: 20px;
+    margin: 28px auto 0;
     font-family: var(--serif);
-    font-size: 1.35rem;
+    font-size: 1.4rem;
     line-height: 1.4;
     color: var(--forest);
-    max-width: 44ch;
+    max-width: 46ch;
   }
   .hero-tagline em {
     font-style: italic;
   }
   .hero-sub {
-    margin-top: 18px;
+    margin: 18px auto 0;
     font-size: 1.08rem;
     color: var(--ink);
     opacity: 0.82;
@@ -234,6 +256,7 @@
     display: flex;
     gap: 14px;
     flex-wrap: wrap;
+    justify-content: center;
   }
   .btn {
     display: inline-flex;
@@ -261,60 +284,48 @@
   .btn-secondary:hover { background: var(--forest); color: var(--cream); }
 
   .hero-signature {
-    margin-top: 26px;
+    margin: 26px auto 0;
     font-size: 0.92rem;
     font-weight: 500;
     color: var(--rust);
     max-width: 46ch;
   }
 
+  .scroll-cue {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--rust);
+    opacity: 0.7;
+  }
+  .scroll-cue span {
+    width: 1px;
+    height: 28px;
+    background: var(--rust);
+    animation: scrollPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
   @media (max-width: 480px) {
     .nav-name { font-size: 1.1rem; }
-    h1.display { font-size: clamp(2.2rem, 9vw, 3rem); }
     .hero-tagline { font-size: 1.1rem; }
     .btn { padding: 11px 18px; font-size: 0.85rem; }
   }
 
-  .portrait {
-    width: 100%;
-    max-width: 460px;
-    margin-left: auto;
-    aspect-ratio: 4 / 5;
-    border-radius: 4px;
-    background: linear-gradient(160deg, var(--forest) 0%, var(--forest-deep) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 24px 48px -20px rgba(20, 39, 32, 0.45);
-  }
-  .portrait-initials {
-    font-family: var(--serif);
-    font-size: 4.2rem;
-    color: var(--gold-light);
-    opacity: 0.85;
-    font-weight: 400;
-  }
-  .portrait-note {
-    position: absolute;
-    bottom: 14px;
-    left: 14px;
-    right: 14px;
-    font-size: 0.68rem;
-    color: var(--cream);
-    opacity: 0.55;
-    letter-spacing: 0.03em;
-  }
-  .portrait img {
-    width: 100%; height: 100%; object-fit: cover;
-    display: block;
-  }
-
   @media (max-width: 720px) {
-    .hero .wrap { grid-template-columns: 1fr; }
-    .portrait { max-width: 320px; margin: 0 auto; }
-    header.hero { padding: 64px 0 56px; }
+    header.hero { min-height: 90vh; padding: 100px 0 60px; }
   }
 
   /* ---------- SECTION SHELL ---------- */
@@ -339,6 +350,11 @@
     letter-spacing: 0.13em;
     color: var(--rust);
     font-weight: 600;
+  }
+  .sec-num {
+    color: var(--gold);
+    opacity: 0.8;
+    margin-right: 4px;
   }
 
   /* ---------- ABOUT ---------- */
@@ -703,28 +719,27 @@
 </nav>
 
 <header class="hero" id="top">
-  <div class="wrap">
-    <div>
-      <h1 class="display hero-anim">Hi, I'm Basbo.</h1>
-      <p class="hero-tagline hero-anim">I'm passionate about building <em>connective tissue</em> between biology, computing, and the people they serve.</p>
-      <p class="hero-sub hero-anim">Currently a senior at Dakota State University. Right now I'm doing research at Yale School of Medicine, Madison Cyber Labs, and Corteva Agriscience. My free time (when I get some) goes to binge-watching The Big Bang Theory, learning how to swim, and playing tennis &mdash; enthusiastically, if not always well.</p>
-      <div class="hero-actions hero-anim">
-        <a class="btn btn-primary" href="Basbo_Ayelazono_CV%20(1).pdf" target="_blank" rel="noopener">View CV</a>
-        <a class="btn btn-secondary" href="Basbo_Ayelazono_CV%20(1).pdf" download>Download CV</a>
-      </div>
-      <p class="hero-signature hero-anim">I'm currently seeking PhD positions in computational design, accessibility, and computational biology.</p>
-    </div>
-    <div class="portrait hero-anim">
-      <img src="basbo-photo.jpeg" alt="Portrait of Basbo Ayelazono" id="portraitImg">
-    </div>
+  <div class="hero-bg" id="heroBg">
+    <img src="basbo-photo.jpeg" alt="" aria-hidden="true">
   </div>
+  <div class="wrap hero-content">
+    <h1 class="display hero-anim">Hi, I'm Basbo.</h1>
+    <p class="hero-tagline hero-anim">I'm passionate about building <em>connective tissue</em> between biology, computing, and the people they serve.</p>
+    <p class="hero-sub hero-anim">Currently a senior at Dakota State University. Right now I'm doing research at Yale School of Medicine, Madison Cyber Labs, and Corteva Agriscience. My free time (when I get some) goes to binge-watching The Big Bang Theory, learning how to swim, and playing tennis &mdash; enthusiastically, if not always well.</p>
+    <div class="hero-actions hero-anim">
+      <a class="btn btn-primary" href="Basbo_Ayelazono_CV%20(1).pdf" target="_blank" rel="noopener">View CV</a>
+      <a class="btn btn-secondary" href="Basbo_Ayelazono_CV%20(1).pdf" download>Download CV</a>
+    </div>
+    <p class="hero-signature hero-anim">I'm currently seeking PhD positions in computational design, accessibility, and computational biology.</p>
+  </div>
+  <div class="scroll-cue"><span></span>Scroll</div>
 </header>
 
 <section id="about">
   <div class="wrap">
     <div class="section-head reveal">
       <div>
-        <div class="section-kicker">About</div>
+        <div class="section-kicker"><span class="sec-num">// 01</span> About</div>
         <h2 class="section-title">A bit about my work</h2>
       </div>
     </div>
@@ -749,7 +764,7 @@
 
 <section class="thread-section" id="thread">
   <div class="wrap">
-    <div class="section-kicker">The Path</div>
+    <div class="section-kicker"><span class="sec-num">// 02</span> The Path</div>
     <h2 class="section-title">One thread, three fields</h2>
     <p class="lede">Each stage of my research has fed the next. Ecology taught me to work with messy, real-world data. Biomedical research taught me rigor at the bench. Accessibility work taught me to design with, not just for, the people affected. Software engineering is how I make all of it usable at scale.</p>
     <div class="thread">
@@ -777,7 +792,7 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div>
-        <div class="section-kicker">Selected Work</div>
+        <div class="section-kicker"><span class="sec-num">// 03</span> Selected Work</div>
         <h2 class="section-title">Projects</h2>
       </div>
     </div>
@@ -872,7 +887,7 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div>
-        <div class="section-kicker">Research Record</div>
+        <div class="section-kicker"><span class="sec-num">// 04</span> Research Record</div>
         <h2 class="section-title">Presentations &amp; publications</h2>
       </div>
     </div>
@@ -923,7 +938,7 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div>
-        <div class="section-kicker">Media</div>
+        <div class="section-kicker"><span class="sec-num">// 05</span> Media</div>
         <h2 class="section-title">In conversation &amp; in print</h2>
       </div>
     </div>
@@ -960,7 +975,7 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div>
-        <div class="section-kicker">Beyond the Lab</div>
+        <div class="section-kicker"><span class="sec-num">// 06</span> Beyond the Lab</div>
         <h2 class="section-title">Interests</h2>
       </div>
     </div>
@@ -1004,7 +1019,7 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div>
-        <div class="section-kicker">Looking Ahead</div>
+        <div class="section-kicker"><span class="sec-num">// 07</span> Looking Ahead</div>
         <h2 class="section-title">Where this is going</h2>
       </div>
     </div>
@@ -1045,6 +1060,21 @@
   });
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Hero photo fades out as the user scrolls past the hero section
+  const heroBg = document.getElementById('heroBg');
+  const heroEl = document.querySelector('header.hero');
+  if (heroBg && heroEl && !prefersReducedMotion) {
+    const updateHeroFade = () => {
+      const heroHeight = heroEl.offsetHeight;
+      const scrolled = window.scrollY;
+      const fadeProgress = Math.min(scrolled / (heroHeight * 0.8), 1);
+      heroBg.style.opacity = String(1 - fadeProgress);
+      heroBg.style.transform = `translateY(${scrolled * 0.15}px)`;
+    };
+    window.addEventListener('scroll', updateHeroFade, { passive: true });
+    updateHeroFade();
+  }
 
   if (prefersReducedMotion) {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
